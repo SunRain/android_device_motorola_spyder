@@ -74,9 +74,9 @@ PRODUCT_PACKAGES += \
 # HotSpot
 PRODUCT_PACKAGES += \
     tiap_loader \
-    tiap_cu \
     hostap \
     hostapd.conf 
+#    tiap_cu 
 
 # Bluetooth
 PRODUCT_PACKAGES += \
@@ -264,10 +264,10 @@ PRODUCT_COPY_FILES += \
 
 # stuff specific to ti OMAP4 hardware
 $(call inherit-product, hardware/ti/omap4xxx/omap4.mk)
-$(call inherit-product, hardware/ti/camera/camera.mk)
+#$(call inherit-product, hardware/ti/camera/camera.mk)
 $(call inherit-product, hardware/ti/wpan/ti-wpan-products.mk)
 #$(call inherit-product-if-exists, vendor/google/google-vendor.mk)
-$(call inherit-product-if-exists, vendor/verizon/spyder-verizon-vendor.mk)
+#$(call inherit-product-if-exists, vendor/verizon/spyder-verizon-vendor.mk)
 #$(call inherit-product, packages/apps/DSPManager/cyanogen-dsp/Android.mk)
 
 $(call inherit-product-if-exists, vendor/motorola/spyder/spyder-vendor.mk)
