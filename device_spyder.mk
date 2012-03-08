@@ -93,10 +93,10 @@ PRODUCT_PACKAGES += \
 
 # Release utilities
 PRODUCT_PACKAGES += \
-    spyder_releaseutils-check_kernel \
-    spyder_releaseutils-finalize_release \
-    spyder_releaseutils-mke2fs \
-    spyder_releaseutils-tune2fs
+ spyder_releaseutils-finalize_release 
+#    spyder_releaseutils-check_kernel \
+#    spyder_releaseutils-mke2fs \
+#    spyder_releaseutils-tune2fs
 
 # Tests -- Can remove later
 PRODUCT_PACKAGES += \
@@ -106,7 +106,7 @@ PRODUCT_PACKAGES += \
     tiler_ptest \
     overlay_test \
     omx_tests \
-    evtest \
+    evtest 
 #    camera_test \
 #    VideoEncTest 
 
@@ -115,7 +115,7 @@ PRODUCT_PACKAGES += \
     Superuser \
     su \
     Usb \
-    DockAudio \
+    DockAudio 
 
 
 PRODUCT_PACKAGES += \
@@ -136,30 +136,30 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/motorola/spyder/prebuilt/app/wifi_tether_v3_1-beta11.apk:system/app/wifi_tether_v3_1-beta11.apk \
     device/motorola/spyder/prebuilt/lib/libwtnativetask.so:system/lib/libwtnativetask.so \
-    device/motorola/spyder/prebuilt/bin/bootsound:system/bin/bootsound \
+    device/motorola/spyder/prebuilt/bin/bootsound:system/bin/bootsound 
 #    device/motorola/spyder/prebuilt/media/android_audio.mp3:system/media/android_audio.mp3 \
 #    device/motorola/spyder/prebuilt/media/bootanimation.zip:system/media/bootanimation.zip \
     
 
 # Rootfs files
-PRODUCT_COPY_FILES += \
-    out/target/product/spyder/root/init:system/etc/rootfs/init \
-    out/target/product/spyder/root/sbin/adbd:system/etc/rootfs/sbin/adbd \
-    device/motorola/spyder/root/default.prop:system/etc/rootfs/default.prop \
-    device/motorola/spyder/root/init.rc:system/etc/rootfs/init.rc \
-    device/motorola/spyder/root/init.mapphone_cdma.rc:system/etc/rootfs/init.mapphone_cdma.rc \
-    device/motorola/spyder/root/init.mapphone_umts.rc:system/etc/rootfs/init.mapphone_umts.rc \
-    device/motorola/spyder/root/usbcheck.sh:system/etc/rootfs/usbcheck.sh \
-    device/motorola/spyder/root/ueventd.rc:system/etc/rootfs/ueventd.rc \
+#PRODUCT_COPY_FILES += \
+#    out/target/product/spyder/root/init:system/etc/rootfs/init \
+#    out/target/product/spyder/root/sbin/adbd:system/etc/rootfs/sbin/adbd \
+#    device/motorola/spyder/root/default.prop:system/etc/rootfs/default.prop \
+#    device/motorola/spyder/root/init.rc:system/etc/rootfs/init.rc \
+#    device/motorola/spyder/root/init.mapphone_cdma.rc:system/etc/rootfs/init.mapphone_cdma.rc \
+#    device/motorola/spyder/root/init.mapphone_umts.rc:system/etc/rootfs/init.mapphone_umts.rc \
+#    device/motorola/spyder/root/usbcheck.sh:system/etc/rootfs/usbcheck.sh \
+#    device/motorola/spyder/root/ueventd.rc:system/etc/rootfs/ueventd.rc \
 
 # Hijack files
-PRODUCT_COPY_FILES += \
-    device/motorola/spyder/root/default.prop:root/default.prop \
-    device/motorola/spyder/root/init.rc:root/init.rc \
-    device/motorola/spyder/root-hijack/init.mapphone_cdma.rc:root/init.mapphone_cdma.rc \
-    device/motorola/spyder/root-hijack/init.mapphone_umts.rc:root/init.mapphone_umts.rc \
-    device/motorola/spyder/root/usbcheck.sh:root/usbcheck.sh \
-    device/motorola/spyder/root/ueventd.rc:root/ueventd.rc \
+#PRODUCT_COPY_FILES += \
+#    device/motorola/spyder/root/default.prop:root/default.prop \
+#    device/motorola/spyder/root/init.rc:root/init.rc \
+#    device/motorola/spyder/root-hijack/init.mapphone_cdma.rc:root/init.mapphone_cdma.rc \
+#    device/motorola/spyder/root-hijack/init.mapphone_umts.rc:root/init.mapphone_umts.rc \
+#    device/motorola/spyder/root/usbcheck.sh:root/usbcheck.sh \
+#    device/motorola/spyder/root/ueventd.rc:root/ueventd.rc \
 
 
 # Permissions files
@@ -184,8 +184,6 @@ PRODUCT_COPY_FILES += \
 # Prebuilts
 PRODUCT_COPY_FILES += \
     device/motorola/spyder/prebuilt/bin/battd:system/bin/battd \
-    device/motorola/spyder/prebuilt/bin/hijack:system/bin/hijack \
-    device/motorola/spyder/prebuilt/bin/hijack.log_dump:system/bin/hijack.log_dump \
     device/motorola/spyder/prebuilt/bin/mount_ext3.sh:system/bin/mount_ext3.sh \
     device/motorola/spyder/prebuilt/bin/strace:system/bin/strace \
     device/motorola/spyder/prebuilt/etc/TICameraCameraProperties.xml:system/etc/TICameraCameraProperties.xml \
@@ -194,7 +192,7 @@ PRODUCT_COPY_FILES += \
     device/motorola/spyder/prebuilt/etc/vold.fstab:system/etc/vold.fstab \
     device/motorola/spyder/prebuilt/etc/wifi/tiwlan_ap.ini:system/etc/wifi/tiwlan_ap.ini \
     device/motorola/spyder/prebuilt/etc/wifi/tiwlan.ini:system/etc/wifi/tiwlan.ini \
-    device/motorola/spyder/prebuilt/etc/hijack-boot.zip:system/etc/hijack-boot.zip \
+    device/motorola/spyder/prebuilt/etc/init.d/04pdsbackup:system/etc/init.d/04pdsbackup \
     device/motorola/spyder/prebuilt/usr/idc/cpcap-key.idc:system/usr/idc/cpcap-key.idc \
     device/motorola/spyder/prebuilt/usr/idc/cy8c201xx.idc:system/usr/idc/cy8c201xx.idc \
     device/motorola/spyder/prebuilt/usr/idc/light-prox.idc:system/usr/idc/light-prox.idc \
@@ -216,12 +214,15 @@ PRODUCT_COPY_FILES += \
     device/motorola/spyder/prebuilt/usr/keylayout/cy8c201xx.kl:system/usr/keylayout/cy8c201xx.kl \
     device/motorola/spyder/prebuilt/usr/keylayout/evfwd.kl:system/usr/keylayout/evfwd.kl \
     device/motorola/spyder/prebuilt/usr/keylayout/omap-keypad.kl:system/usr/keylayout/omap-keypad.kl \
-    device/motorola/spyder/prebuilt/usr/keylayout/atmxt-i2c.kl:system/usr/keylayout/atmxt-i2c.kl \
+    device/motorola/spyder/prebuilt/usr/keylayout/atmxt-i2c.kl:system/usr/keylayout/atmxt-i2c.kl 
+    #device/motorola/spyder/prebuilt/bin/hijack:system/bin/hijack \
+    #device/motorola/spyder/prebuilt/bin/hijack.log_dump:system/bin/hijack.log_dump \
+    #device/motorola/spyder/prebuilt/etc/hijack-boot.zip:system/etc/hijack-boot.zip \
 
 # Phone settings
-PRODUCT_COPY_FILES += \
-    device/sample/etc/apns-conf_verizon.xml:system/etc/apns-conf.xml \
-    vendor/cm/prebuilt/common/etc/spn-conf.xml:system/etc/spn-conf.xml \
+#PRODUCT_COPY_FILES += \
+#    device/sample/etc/apns-conf_verizon.xml:system/etc/apns-conf.xml \
+#    vendor/cm/prebuilt/common/etc/spn-conf.xml:system/etc/spn-conf.xml \
 
 
 # Graphics
@@ -270,13 +271,16 @@ $(call inherit-product, hardware/ti/wpan/ti-wpan-products.mk)
 #$(call inherit-product-if-exists, vendor/verizon/spyder-verizon-vendor.mk)
 #$(call inherit-product, packages/apps/DSPManager/cyanogen-dsp/Android.mk)
 
-$(call inherit-product-if-exists, vendor/motorola/spyder/spyder-vendor.mk)
+#$(call inherit-product-if-exists, vendor/motorola/spyder/spyder-vendor.mk)
+
+$(call inherit-product, device/motorola/spyder/bootmenu/bootmenu.mk)
 
 
 # stuff common to all Motorola phones -- disabled for Sandbox
 #$(call inherit-product, device/motorola/common/common_hijack.mk)
 
 $(call inherit-product, build/target/product/full_base_telephony.mk)
+
 
 PRODUCT_NAME := full_spyder
 PRODUCT_DEVICE := spyder
