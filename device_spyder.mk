@@ -14,12 +14,12 @@ $(call inherit-product, device/common/gps/gps_us_supl.mk)
 PRODUCT_AAPT_CONFIG := normal hdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
 
-PRODUCT_PACKAGES := \
-    charger \
-    charger_res_images
+#PRODUCT_PACKAGES := \
+#    charger \
+#    charger_res_images
 
 # Audio
-PRODUCT_COPY_FILES += \
+PRODUCT_COPY_FILES := \
     device/motorola/spyder/audio/acoustics.default.so:/system/lib/hw/acoustics.spyder.so \
     device/motorola/spyder/audio/alsa.omap4.so:/system/lib/hw/alsa.spyder.so \
     device/motorola/spyder/audio/libasound.so:/system/lib/libasound.so \
