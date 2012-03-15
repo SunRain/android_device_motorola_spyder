@@ -25,5 +25,5 @@ done
 #rm /sbin/busybox
 
 ## reduce lcd backlight to save battery
-echo 18 > /sys/class/leds/lcd-backlight/brightness
+#echo 18 > /sys/class/leds/lcd-backlight/brightness
 

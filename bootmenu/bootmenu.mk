@@ -23,7 +23,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
 	${bm_device}/bootmenu/profiles/cm/init.rc:system/bootmenu/2nd-init/init.rc \
 	${bm_device}/bootmenu/profiles/cm/init.mapphone_cdma.rc:system/bootmenu/2nd-init/init.mapphone_cdma.rc \
-	${bm_device}/bootmenu/profiles/cm/ueventd.rc:system/bootmenu/2nd-init/ueventd.rc
+	${bm_device}/bootmenu/profiles/cm/ueventd.rc:system/bootmenu/2nd-init/ueventd.rc	\
+	${bm_device}/bootmenu/profiles/cm/init:system/bootmenu/2nd-init/init 
 #	${bm_device}/profiles/standard/init.mapphone_umts.rc:system/bootmenu/2nd-init/init.mapphone_umts.rc \
 #	${bm_device}/profiles/standard/ueventd.rc:system/bootmenu/2nd-init/ueventd.rc \
 #	${bm_device}/profiles/backup/init.rc:system/bootmenu/2nd-boot/init.rc \
@@ -59,9 +60,10 @@ PRODUCT_COPY_FILES += \
 	${bm_device}/bootmenu/binary/2nd-init:system/bootmenu/binary/2nd-init \
 	${bm_device}/bootmenu/binary/adbd.root:system/bootmenu/binary/adbd.root \
 	${bm_device}/bootmenu/binary/adbd:system/bootmenu/binary/adbd \
-	out/target/product/spyder/utilities/busybox:system/bootmenu/binary/busybox 
-	
-	#${bm_device}/bootmenu/binary/lsof.static:system/bootmenu/binary/lsof 
+	out/target/product/spyder/utilities/busybox:system/bootmenu/binary/busybox \
+	${bm_device}/bootmenu/binary/lsof.static:system/bootmenu/binary/lsof \
+	${bm_device}/bootmenu/binary/bootmenu:system/bootmenu/binary/bootmenu \
+	${bm_device}/bootmenu/binary/recovery:system/bootmenu/binary/recovery
 	#${bm_device}/bootmenu/binary/logwrapper.bin:system/bootmenu/binary/logwrapper.bin 
 	#${bm_device}/bootmenu/binary/logwrapper.bin:system/bin/logwrapper.bin 
 

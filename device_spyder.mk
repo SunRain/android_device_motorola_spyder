@@ -14,19 +14,15 @@ $(call inherit-product, device/common/gps/gps_us_supl.mk)
 PRODUCT_AAPT_CONFIG := normal hdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
 
-#PRODUCT_PACKAGES := \
-#    charger \
-#    charger_res_images
-
 # Audio
-PRODUCT_COPY_FILES := \
-    device/motorola/spyder/audio/acoustics.default.so:/system/lib/hw/acoustics.spyder.so \
-    device/motorola/spyder/audio/alsa.omap4.so:/system/lib/hw/alsa.spyder.so \
-    device/motorola/spyder/audio/libasound.so:/system/lib/libasound.so \
-    device/motorola/spyder/audio/libaudio.so:/system/lib/libaudio.so \
-    device/motorola/spyder/audio/libaudio_ext.so:/system/lib/libaudio_ext.so \
-    device/motorola/spyder/audio/libaudiopolicy.so:/system/lib/libaudiopolicy.so \
-    device/motorola/spyder/audio/liba2dp.so:/system/lib/liba2dp.so 
+#PRODUCT_COPY_FILES := \
+#    device/motorola/spyder/audio/acoustics.default.so:/system/lib/hw/acoustics.spyder.so \
+#    device/motorola/spyder/audio/alsa.omap4.so:/system/lib/hw/alsa.spyder.so \
+#    device/motorola/spyder/audio/libasound.so:/system/lib/libasound.so \
+#    device/motorola/spyder/audio/libaudio.so:/system/lib/libaudio.so \
+#    device/motorola/spyder/audio/libaudio_ext.so:/system/lib/libaudio_ext.so \
+#    device/motorola/spyder/audio/libaudiopolicy.so:/system/lib/libaudiopolicy.so \
+#    device/motorola/spyder/audio/liba2dp.so:/system/lib/liba2dp.so 
 
 # Hardware HALs
 PRODUCT_COPY_FILES += \
@@ -37,100 +33,14 @@ PRODUCT_COPY_FILES += \
 #    lights.spyder \
 #    sensors.spyder \
 
-PRODUCT_PACKAGES += \
-    camera.omap4
 
-PRODUCT_PACKAGES += \
-    audio.primary.spyder \
-    audio_policy.spyder
-
-# BlueZ a2dp Audio HAL module
-PRODUCT_PACKAGES += \
-    audio.a2dp.default
-
-# BlueZ test tools
-PRODUCT_PACKAGES += \
-    hciconfig \
-    hcitool
-
-# Modem
-PRODUCT_PACKAGES += \
-    nc \
-    Stk \
-    libaudiomodemgeneric \
-    libreference-cdma-sms \
-    rild \
-    radiooptions \
-    sh 
-
-# Wifi
-PRODUCT_PACKAGES += \
-    libCustomWifi \
-    wlan_loader \
-    wlan_cu \
-    dhcpcd.conf \
-    wpa_supplicant.conf 
-
-# HotSpot
-PRODUCT_PACKAGES += \
-    tiap_loader \
-    hostap \
-    hostapd.conf 
-#    tiap_cu 
-
-# Bluetooth
-PRODUCT_PACKAGES += \
-    bt_sco_app \
-    uim-sysfs 
-
-# FM Radio
-#PRODUCT_PACKAGES += \
-#    com.ti.fm.fmradioif.xml \
-#    fmradioif \
-#    FmRxApp \
-#    FmTxApp \
-#    FmService 
-
-# Release utilities
-PRODUCT_PACKAGES += \
- spyder_releaseutils-finalize_release 
-#    spyder_releaseutils-check_kernel \
-#    spyder_releaseutils-mke2fs \
-#    spyder_releaseutils-tune2fs
-
-# Tests -- Can remove later
-PRODUCT_PACKAGES += \
-    d2c_test \
-    memmgr_test \
-    utils_test \
-    tiler_ptest \
-    overlay_test \
-    omx_tests \
-    evtest 
-#    camera_test \
-#    VideoEncTest 
-
-PRODUCT_PACKAGES += \
-    Camera \
-    Superuser \
-    su \
-    Usb \
-    DockAudio 
-
-
-PRODUCT_PACKAGES += \
-    librs_jni \
-    com.android.future.usb.accessory \
-    FileManager \
-    libjni_pinyinime 
-#    MusicFX \
 
 # CameraFix
-PRODUCT_COPY_FILES += \
-    device/motorola/spyder/prebuilt/camerafix/hw/camera.omap4.so:system/lib/hw/camera.omap4.so \
-    device/motorola/spyder/prebuilt/camerafix/libcamera.so:system/lib/libcamera.so \
-    device/motorola/spyder/prebuilt/camerafix/libomxcameraadapter.so:system/lib/libomxcameraadapter.so \
-    device/motorola/spyder/prebuilt/camerafix/libtiutils.so:system/lib/libtiutils.so \
+#PRODUCT_COPY_FILES += \
+#    device/motorola/spyder/prebuilt/camerafix/libcamera.so:system/lib/libcamera.so \
+#    device/motorola/spyder/prebuilt/camerafix/libomxcameraadapter.so:system/lib/libomxcameraadapter.so \
+#    device/motorola/spyder/prebuilt/camerafix/libtiutils.so:system/lib/libtiutils.so 
+    #device/motorola/spyder/prebuilt/camerafix/hw/camera.omap4.so:system/lib/hw/camera.omap4.so \
 
 # WirelessTether
 PRODUCT_COPY_FILES += \
@@ -241,6 +151,105 @@ PRODUCT_COPY_FILES += \
     device/motorola/spyder/prebuilt/imgtec/libusc.so:system/lib/libusc.so \
     device/motorola/spyder/prebuilt/imgtec/libdrm.so:system/lib/libdrm.so \
 
+
+#PRODUCT_PACKAGES += \
+	#camera.spyder
+    #camera.omap4
+
+PRODUCT_PACKAGES += \
+	libaudiohw_legacy \
+	audio_policy.default 
+#	libaudiopolicy_legacy \
+	# 	libaudiopolicy_legacy2 \
+   # audio.primary.spyder \
+    #audio_policy.spyder 
+
+# BlueZ a2dp Audio HAL module
+PRODUCT_PACKAGES += \
+    audio.a2dp.default
+
+# BlueZ test tools
+PRODUCT_PACKAGES += \
+    hciconfig \
+    hcitool
+
+# Modem
+PRODUCT_PACKAGES += \
+    nc \
+    Stk \
+    libaudiomodemgeneric \
+    libreference-cdma-sms \
+    rild \
+    radiooptions \
+    sh 
+
+# Wifi
+PRODUCT_PACKAGES += \
+    libCustomWifi \
+    wlan_loader \
+    wlan_cu \
+    dhcpcd.conf \
+    wpa_supplicant.conf 
+
+# HotSpot
+PRODUCT_PACKAGES += \
+    tiap_loader \
+    hostap \
+    hostapd.conf 
+#    tiap_cu 
+
+# Bluetooth
+PRODUCT_PACKAGES += \
+    bt_sco_app \
+    uim-sysfs 
+
+# FM Radio
+#PRODUCT_PACKAGES += \
+#    com.ti.fm.fmradioif.xml \
+#    fmradioif \
+#    FmRxApp \
+#    FmTxApp \
+#    FmService 
+
+# Release utilities
+PRODUCT_PACKAGES += \
+ spyder_releaseutils-finalize_release 
+#    spyder_releaseutils-check_kernel \
+#    spyder_releaseutils-mke2fs \
+#    spyder_releaseutils-tune2fs
+
+# Tests -- Can remove later
+PRODUCT_PACKAGES += \
+    d2c_test \
+    memmgr_test \
+    utils_test \
+    tiler_ptest \
+    overlay_test \
+    omx_tests \
+    evtest 
+#    camera_test \
+#    VideoEncTest 
+
+PRODUCT_PACKAGES += \
+    Camera \
+    Superuser \
+    su \
+    Usb \
+    DockAudio 
+
+
+PRODUCT_PACKAGES += \
+    librs_jni \
+    com.android.future.usb.accessory \
+    FileManager \
+    libjni_pinyinime 
+#    MusicFX \
+
+#PRODUCT_PACKAGES := \
+#    charger \
+#    charger_res_images
+
+
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
@@ -271,7 +280,7 @@ $(call inherit-product, hardware/ti/wpan/ti-wpan-products.mk)
 #$(call inherit-product-if-exists, vendor/verizon/spyder-verizon-vendor.mk)
 #$(call inherit-product, packages/apps/DSPManager/cyanogen-dsp/Android.mk)
 
-#$(call inherit-product-if-exists, vendor/motorola/spyder/spyder-vendor.mk)
+$(call inherit-product-if-exists, vendor/motorola/spyder/spyder-vendor.mk)
 
 $(call inherit-product, device/motorola/spyder/bootmenu/bootmenu.mk)
 

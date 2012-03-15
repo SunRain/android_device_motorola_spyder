@@ -106,7 +106,7 @@ mount -t $FS_SYSTEM -o rw,noatime,nodiratime $PART_SYSTEM /system
 echo 0 > /sys/class/leds/red/brightness
 echo 0 > /sys/class/leds/green/brightness
 echo 0 > /sys/class/leds/blue/brightness
-#[ ! -f /system/build.prop ] && echo 1 > /sys/class/leds/red/brightness
+[ ! -f /system/build.prop ] && echo 1 > /sys/class/leds/red/brightness
 
 #############################
 
@@ -129,4 +129,4 @@ else
 	echo 0 > /sys/class/leds/blue/brightness
 fi
 
-exit
+exit 0

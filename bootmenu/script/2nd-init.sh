@@ -50,7 +50,7 @@ umount /data
 
 ######## Cleanup
 
-rm -f /sbin/adbd.root
+#rm -f /sbin/adbd.root
 rm -f /sbin/lsof
 
 ## busybox cleanup..

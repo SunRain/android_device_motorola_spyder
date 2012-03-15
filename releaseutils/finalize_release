@@ -7,7 +7,7 @@ mv /system/bin/logwrapper /system/bin/logwrapper.bin
 #ln -s hijack /system/bin/logwrapper
 
 [ ! -e /system/bin/bootmenu ] && cp -f /system/bootmenu/binary/bootmenu /system/bin/bootmenu
-ln -s /system/bootmenu /system/bin/logwrapper
+ln -s /system/bin/bootmenu /system/bin/logwrapper
 
 # kill off our release utilities (not needed on-system)
 #rm -r -f /system/etc/finalize_release
