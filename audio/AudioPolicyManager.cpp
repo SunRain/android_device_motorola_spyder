@@ -20,9 +20,9 @@
 #include "AudioPolicyManager.h"
 #include <media/mediarecorder.h>
 
-//namespace android_audio_legacy {
-namespace android {
-		
+namespace android_audio_legacy {
+
+
 
 // ----------------------------------------------------------------------------
 // AudioPolicyManager for targa platform (based on jordan)

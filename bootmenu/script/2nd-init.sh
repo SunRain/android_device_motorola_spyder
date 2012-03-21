@@ -19,23 +19,23 @@ chmod 6755 /system/bootmenu/binary/2nd-init
 rm -f /sbin/ueventd
 ln -s /init /sbin/ueventd
 
-ADBD_RUNNING=`ps | grep adbd | grep -v grep`
-if [ -z "$ADB_RUNNING" ]; then
+#ADBD_RUNNING=`ps | grep adbd | grep -v grep`
+#if [ -z "$ADB_RUNNING" ]; then
     #rm -f /sbin/adbd.root
-    rm -f /tmp/usbd_current_state
+#    rm -f /tmp/usbd_current_state
     #delete if is a symlink
-    [ -L "/tmp" ] && rm -f /tmp
-    mkdir -p /tmp
-else
+#    [ -L "/tmp" ] && rm -f /tmp
+#    mkdir -p /tmp
+# else
     # well, not beautiful but do the work
     # to keep current usbd state
-    if [ -L "/tmp" ]; then
-        mv /tmp/usbd_current_state / 2>/dev/null
-        rm -f /tmp
-        mkdir -p /tmp
-        mv /usbd_current_state /tmp/ 2>/dev/null
-    fi
-fi
+#     if [ -L "/tmp" ]; then
+#         mv /tmp/usbd_current_state / 2>/dev/null
+#         rm -f /tmp
+#         mkdir -p /tmp
+#         mv /usbd_current_state /tmp/ 2>/dev/null
+#     fi
+# fi
 
 
 ## unmount devices
@@ -58,7 +58,7 @@ for cmd in $(/sbin/busybox --list); do
   [ -L "/sbin/$cmd" ] && rm "/sbin/$cmd"
 done
 
-rm -f /sbin/busybox
+#rm -f /sbin/busybox
 
 ## used for adbd shell (can be bash also)
 /system/xbin/ln -s /system/xbin/busybox /sbin/sh

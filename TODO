@@ -23,3 +23,11 @@ Startup:
 13.  [mediaserver] 03:06:27.463592 open("/system/lib/libittiam_asfextractor.so", O_RDONLY|O_LARGEFILE) = -1 ENOENT (No such file or directory)
 
 
+
+E/HAL     (  764): load: module=/system/lib/hw/audio.primary.spyder.so
+E/HAL     (  764): Cannot load library: link_image[1965]:   764 could not load needed library 'libaudio.so' for 'audio.primary.spyder.so' (reloc_library[1314]:   764 cannot locate '_ZN7android11AudioSystem24getDeviceConnectionStateENS0_13audio_devicesEPKc'...
+E/HAL     (  764): )
+
+E/HAL     (  764): load: module=/system/lib/hw/audio_policy.spyder.so
+E/HAL     (  764): Cannot load library: link_image[1965]:   764 could not load needed library 'libaudiopolicy.so' for 'audio_policy.spyder.so' (reloc_library[1314]:   764 cannot locate '_ZN7android11AudioSystem11isLinearPCMEj'...
+E/HAL     (  764): )

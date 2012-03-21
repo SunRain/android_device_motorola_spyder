@@ -33,16 +33,30 @@ on init
     write /proc/sys/net/bridge/bridge-nf-call-ip6tables 0
 	
 on fs
-   # mount ext3 mmc@system /system wait ro noatime nodiratime barrier=1
+	#log "== mount ext3 mmc@system /system wait -----------------------"
+    #mount ext3 mmc@system /system wait ro noatime nodiratime barrier=1
+	#log "== mount ext3 pds /pds -----------------------"
     #exec /system/bin/logwrapper /system/bin/mount_ext3.sh pds /pds
+	#log "== mount ext3 pds /pds -----------------------"
     #exec /system/bin/logwrapper /system/bin/mount_ext3.sh preinstall /preinstall
+	#log "== mount ext3 userdata /data -----------------------"
     #exec /system/bin/logwrapper /system/bin/mount_ext3.sh userdata /data
+	#log "== mount ext3 cache /cache -----------------------"
     #exec /system/bin/logwrapper /system/bin/mount_ext3.sh cache /cache
 	
-	exec /system/bin/logwrapper mount ext3 /dev/block/system /system wait noatime nodiratime barrier=1
-	exec /system/bin/logwrapper mount ext3 /dev/block/pds /pds nosuid nodev noatime nodiratime
-	exec /system/bin/logwrapper mount ext3 /dev/block/userdata /data nosuid nodev noatime nodiratime
-	exec /system/bin/logwrapper mount ext3 /dev/block/cache /cache nosuid nodev noatime nodiratime 
+	#exec /system/bin/logwrapper mount ext3 /dev/block/system /system wait noatime nodiratime barrier=1
+	#exec /system/bin/logwrapper mount ext3 /dev/block/pds /pds nosuid nodev noatime nodiratime
+	#exec /system/bin/logwrapper mount ext3 /dev/block/userdata /data nosuid nodev noatime nodiratime
+	#exec /system/bin/logwrapper mount ext3 /dev/block/cache /cache nosuid nodev noatime nodiratime 
+	
+	log "== mount ext3 mmc@system /system wait -----------------------"
+	mount ext3 /dev/block/system /system wait noatime nodiratime barrier=1
+	log "== mount ext3 pds /pds -----------------------"
+	mount ext3 /dev/block/pds /pds nosuid nodev noatime nodiratime
+	log "== mount ext3 userdata /data -----------------------"
+	 mount ext3 /dev/block/userdata /data nosuid nodev noatime nodiratime
+	 log "== mount ext3 cache /cache -----------------------"
+	 mount ext3 /dev/block/cache /cache nosuid nodev noatime nodiratime 
 	
 	
 	#mount ext3 /dev/block/mmcblk1p20 /system wait noatime nodiratime barrier=1

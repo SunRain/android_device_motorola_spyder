@@ -178,9 +178,13 @@ on post-fs
     chmod 0777 /mnt/sdcard-ext               # Feature 34534
     
     # create dalvik-cache and double-check the perms
-    mkdir /data/dalvik-cache 0771 system system
+    mkdir /data/dalvik-cache 0777 system system
     chown system system /data/dalvik-cache
-    chmod 0771 /data/dalvik-cache
+    chmod 0777 /data/dalvik-cache
+	
+	mkdir /cache/dalvik-cache 0777 system system
+	chown system system /cache/dalvik-cache
+	chmod 0777 /cache/dalvik-cache	
 
     # create the lost+found directories, so as to enforce our permissions
     mkdir /data/lost+found 0770

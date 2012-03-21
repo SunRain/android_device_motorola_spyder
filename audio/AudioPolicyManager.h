@@ -20,12 +20,10 @@
 #include <utils/Timers.h>
 #include <utils/Errors.h>
 #include <utils/KeyedVector.h>
-//#include <hardware_legacy/AudioPolicyManagerBase.h>
-#include <AudioPolicyManagerBase.h>
+#include <hardware_legacy/AudioPolicyManagerBase.h>
 
 
-//namespace android_audio_legacy {
-namespace android {
+namespace android_audio_legacy {
 
 class AudioPolicyManager: public AudioPolicyManagerBase
 {
