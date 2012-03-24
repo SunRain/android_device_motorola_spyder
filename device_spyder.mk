@@ -109,10 +109,11 @@ PRODUCT_PACKAGES += \
 
 # Release utilities
 PRODUCT_PACKAGES += \
- spyder_releaseutils-finalize_release 
+	 spyder_releaseutils-finalize_release \
+	spyder_releaseutils-mke2fs\
+	spyder_releaseutils-tune2fs
 #    spyder_releaseutils-check_kernel \
-#    spyder_releaseutils-mke2fs \
-#    spyder_releaseutils-tune2fs
+
 
 # Tests -- Can remove later
 PRODUCT_PACKAGES += \
@@ -183,7 +184,7 @@ PRODUCT_COPY_FILES += \
 # stuff specific to ti OMAP4 hardware
 $(call inherit-product, hardware/ti/omap4xxx/omap4.mk)
 #$(call inherit-product, hardware/ti/camera/camera.mk)
-$(call inherit-product, hardware/ti/wpan/ti-wpan-products.mk)
+$(call inherit-product-if-exists, hardware/ti/wpan/ti-wpan-products.mk)
 #$(call inherit-product-if-exists, vendor/google/google-vendor.mk)
 #$(call inherit-product-if-exists, vendor/verizon/spyder-verizon-vendor.mk)
 #$(call inherit-product, packages/apps/DSPManager/cyanogen-dsp/Android.mk)

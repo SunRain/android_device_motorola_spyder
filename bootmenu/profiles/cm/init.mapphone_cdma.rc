@@ -64,8 +64,8 @@ on fs
 	#mount ext3 /dev/block/mmcblk1p24 /data nosuid nodev noatime nodiratime
 	#mount ext3 /dev/block/mmcblk1p21 /cache nosuid nodev noatime nodiratime    
 	
-	exec /system/bin/logwrapper /system/bin/mountosh -d /dev/block/webtop
-    exec /osh/etc/init.d/udev start
+	#exec /system/bin/logwrapper /system/bin/mountosh -d /dev/block/webtop
+    #exec /osh/etc/init.d/udev start
 	
 on post-fs
     chown system system /pds
@@ -183,7 +183,7 @@ on post-fs
 	
 # chown/chmod for FOTA
     chown system system /cache/fota
-    chmod 0770 /cache/fota
+    chmod 0777 /cache/fota
 	
 #Set the default value for bluedroid_ref
     write /data/tmp/bluedroid_ref 0

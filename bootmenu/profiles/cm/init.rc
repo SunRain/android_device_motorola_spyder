@@ -44,8 +44,8 @@ on init
     symlink /mnt/sdcard /sdcard
 
     mkdir /system
-    mkdir /data 0771 system system
-    mkdir /cache 0770 system cache
+    mkdir /data 0777 system system
+    mkdir /cache 0777 system cache
     mkdir /config 0500 root root
 
     # Directory for putting things only root should see.
@@ -130,11 +130,11 @@ on post-fs
 
     # Same reason as /data above
     chown system cache /cache
-    chmod 0770 /cache
+    chmod 0777 /cache
 
     # This may have been created by the recovery system with odd permissions
     chown system cache /cache/recovery
-    chmod 0770 /cache/recovery
+    chmod 0777 /cache/recovery
 
     #change permissions on vmallocinfo so we can grab it from bugreports
     chown root log /proc/vmallocinfo
