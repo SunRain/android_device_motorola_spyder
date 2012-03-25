@@ -26,12 +26,6 @@ TARGET_GLOBAL_CFLAGS += -DNEEDS_ARM_ERRATA_754319_754320
 COMMON_GLOBAL_CFLAGS += -DBINDER_COMPAT
 ###
 
-
-TARGET_NO_BOOTLOADER := true
-TARGET_NO_PREINSTALL := false
-TARGET_NO_RADIOIMAGE := false
-BOARD_HAS_LOCKED_BOOTLOADER := true
-
 # Kernel
 TARGET_PREBUILT_KERNEL := device/motorola/spyder/kernel
 BOARD_KERNEL_CMDLINE := console=/dev/null rw mem=1023M@0x80000000 vram=20M omapgpu.vram=0:4M,1:16M,2:16MT init=/init ip=off mmcparts=mmcblk1:p7(pds),p8(utags),p14(boot),p15(recovery),p16(cdrom),p17(misc),p18(cid),p19(kpanic),p20(system),p21(cache),p22(preinstall),p23(webtop),p24(userdata),p25(emstorage) mot_sst=1
@@ -193,3 +187,8 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 BOARD_NEEDS_CUTILS_LOG := true
 BOARD_USES_SECURE_SERVICES := true
 BOARD_HAS_MAPPHONE_SWITCH := true
+
+TARGET_NO_BOOTLOADER := true
+TARGET_NO_PREINSTALL := false
+TARGET_NO_RADIOIMAGE := false
+BOARD_HAS_LOCKED_BOOTLOADER := true

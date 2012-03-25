@@ -90,9 +90,10 @@ PRODUCT_PACKAGES += \
 # HotSpot
 PRODUCT_PACKAGES += \
     tiap_loader \
+    tiap_cu \
     hostap \
     hostapd.conf 
-#    tiap_cu 
+
 
 # Bluetooth
 PRODUCT_PACKAGES += \
