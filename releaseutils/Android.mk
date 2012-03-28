@@ -36,7 +36,8 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := spyder_releaseutils-mke2fs
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := ETC
-LOCAL_MODULE_PATH := $(TARGET_OUT_ETC)/releaseutils
+#LOCAL_MODULE_PATH := $(TARGET_OUT_ETC)/releaseutils
+LOCAL_MODULE_PATH := $(PRODUCT_OUT)/system/bin
 LOCAL_MODULE_STEM := mke2fs
 LOCAL_SRC_FILES := mke2fs
 include $(BUILD_PREBUILT)
@@ -45,7 +46,8 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := spyder_releaseutils-tune2fs
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := ETC
-LOCAL_MODULE_PATH := $(TARGET_OUT_ETC)/releaseutils
+#LOCAL_MODULE_PATH := $(TARGET_OUT_ETC)/releaseutils
+LOCAL_MODULE_PATH := $(PRODUCT_OUT)/system/bin
 LOCAL_MODULE_STEM := tune2fs
 LOCAL_SRC_FILES := tune2fs
 include $(BUILD_PREBUILT)

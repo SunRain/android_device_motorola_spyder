@@ -47,6 +47,7 @@ umount /dev/pts
 umount /mnt/obb
 umount /cache
 umount /data
+umount /preinstall
 
 ######## Cleanup
 

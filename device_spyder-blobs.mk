@@ -69,6 +69,11 @@ PRODUCT_COPY_FILES += \
     device/motorola/spyder/prebuilt/bin/battd:system/bin/battd \
     device/motorola/spyder/prebuilt/bin/mount_ext3.sh:system/bin/mount_ext3.sh \
     device/motorola/spyder/prebuilt/bin/strace:system/bin/strace \
+    device/motorola/spyder/prebuilt/bin/dumpe2fs:system/bin/dumpe2fs \
+    device/motorola/spyder/prebuilt/bin/e2fsck:system/bin/e2fsck \
+    device/motorola/spyder/prebuilt/bin/mke2fs:system/bin/mke2fs \
+    device/motorola/spyder/prebuilt/bin/resize2fs:system/bin/resize2fs \
+    device/motorola/spyder/prebuilt/bin/tune2fs:system/bin/tune2fs \
     device/motorola/spyder/prebuilt/etc/TICameraCameraProperties.xml:system/etc/TICameraCameraProperties.xml \
     device/motorola/spyder/prebuilt/etc/gps.conf:system/etc/gps.conf \
     device/motorola/spyder/prebuilt/etc/media_profiles.xml:system/etc/media_profiles.xml \
@@ -123,7 +128,6 @@ PRODUCT_COPY_FILES += \
     device/motorola/spyder/prebuilt/imgtec/libsrv_um.so:system/lib/libsrv_um.so \
     device/motorola/spyder/prebuilt/imgtec/libusc.so:system/lib/libusc.so \
     device/motorola/spyder/prebuilt/imgtec/libdrm.so:system/lib/libdrm.so \
-
 
 
 

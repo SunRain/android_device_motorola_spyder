@@ -43,31 +43,14 @@ PRODUCT_COPY_FILES += \
 #PRODUCT_PACKAGES += \
 	#camera.spyder
     #camera.omap4
+
+# Sound  + # BlueZ a2dp Audio HAL module
 PRODUCT_PACKAGES += \
-audio_policy.spyder  \
-audio.primary.spyder 
+	hcitool hciattach hcidump hciconfig \
+	libaudioutils audio.a2dp.default audio_policy.spyder  \
+	libaudiohw_legacy audio.primary.spyder 
  #libaudiohw_legacy \
 #libaudiopolicy_legacy2 \
-
-#PRODUCT_PACKAGES += \
-#	libaudiohw_legacy \
-#	libaudiopolicy_legacy\
-#	audio_policy.default \
-#	audio.primary.spyder \
- #	audio_policy.spyder 
-#	libaudiopolicy_legacy \
-	# 	libaudiopolicy_legacy2 \
-   # audio.primary.spyder \
-    #audio_policy.spyder 
-
-# BlueZ a2dp Audio HAL module
-PRODUCT_PACKAGES += \
-    audio.a2dp.default
-
-# BlueZ test tools
-PRODUCT_PACKAGES += \
-    hciconfig \
-    hcitool
 
 # Modem
 PRODUCT_PACKAGES += \
@@ -79,20 +62,20 @@ PRODUCT_PACKAGES += \
     radiooptions \
     sh 
 
-# Wifi
-PRODUCT_PACKAGES += \
-    libCustomWifi \
-    wlan_loader \
-    wlan_cu \
-    dhcpcd.conf \
-    wpa_supplicant.conf 
+# Wifi packages
+PRODUCT_PACKAGES += iwmulticall hostap wlan_loader wlan_cu wpa_supplicant
+PRODUCT_PACKAGES += libhostapdcli libCustomWifi libwpa_client libtiOsLib
+PRODUCT_PACKAGES += tiwlan.ini dhcpcd.conf wpa_supplicant.conf hostapd.conf
+PRODUCT_PACKAGES += tiap_loader tiap_cu ndc
 
-# HotSpot
-PRODUCT_PACKAGES += \
-    tiap_loader \
-    tiap_cu \
-    hostap \
-    hostapd.conf 
+
+# OMX stuff
+PRODUCT_PACKAGES += dspexec libbridge libLCML libOMX_Core
+PRODUCT_PACKAGES += libOMX.TI.AAC.encode libOMX.TI.AAC.decode libOMX.TI.AMR.decode
+PRODUCT_PACKAGES += libOMX.TI.WBAMR.encode libOMX.TI.MP3.decode libOMX.TI.WBAMR.decode
+PRODUCT_PACKAGES += libOMX.TI.WMA.decode libOMX.TI.Video.Decoder libOMX.TI.Video.encoder
+#PRODUCT_PACKAGES += libOMX.TI.VPP
+#PRODUCT_PACKAGES += libskiahw libOMX.TI.JPEG.Encoder libOMX.TI.JPEG.decoder    
 
 
 # Bluetooth
@@ -110,9 +93,9 @@ PRODUCT_PACKAGES += \
 
 # Release utilities
 PRODUCT_PACKAGES += \
-	 spyder_releaseutils-finalize_release \
-	spyder_releaseutils-mke2fs\
-	spyder_releaseutils-tune2fs
+	 spyder_releaseutils-finalize_release 
+	#spyder_releaseutils-mke2fs\
+	#spyder_releaseutils-tune2fs
 #    spyder_releaseutils-check_kernel \
 
 
