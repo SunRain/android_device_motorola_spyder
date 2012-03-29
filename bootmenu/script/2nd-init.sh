@@ -16,8 +16,8 @@ rm -f /ueventd.rc
 cp -r -f /system/bootmenu/2nd-init/* /
 chmod 755 /*.rc
 chmod 6755 /system/bootmenu/binary/2nd-init
-rm -f /sbin/ueventd
-ln -s /init /sbin/ueventd
+#rm -f /sbin/ueventd
+#ln -s /init /sbin/ueventd
 
 #ADBD_RUNNING=`ps | grep adbd | grep -v grep`
 #if [ -z "$ADB_RUNNING" ]; then

@@ -41,7 +41,7 @@ LOCAL_SHARED_LIBRARIES := \
     libmedia \
     libhardware
 LOCAL_SHARED_LIBRARIES += libdl
-LOCAL_SHARED_LIBRARIES += libaudio libaudio_ext.so
+LOCAL_SHARED_LIBRARIES += libaudio libaudio_ext
 LOCAL_STATIC_LIBRARIES := \
     libmedia_helper
 LOCAL_WHOLE_STATIC_LIBRARIES := \
