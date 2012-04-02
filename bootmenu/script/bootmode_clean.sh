@@ -1,3 +1,5 @@
+#!/sbin/bootmenu busybox sh
+
 #!/sbin/sh
 
 source /system/bootmenu/script/_config.sh

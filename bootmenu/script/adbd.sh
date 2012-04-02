@@ -29,4 +29,4 @@ export HISTFILESIZE=256
 
 PATH=/sbin:/system/xbin:/system/bin /sbin/adbd.root &
 
-exit
+exit 0
