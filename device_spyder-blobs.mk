@@ -28,11 +28,12 @@ PRODUCT_COPY_FILES += \
     device/motorola/spyder/prebuilt/imgtec/gralloc.omap4.so:system/lib/hw/gralloc.omap4.so \
 
 # CameraFix
-#PRODUCT_COPY_FILES += \
-#    device/motorola/spyder/prebuilt/camerafix/libcamera.so:system/lib/libcamera.so \
-#    device/motorola/spyder/prebuilt/camerafix/libomxcameraadapter.so:system/lib/libomxcameraadapter.so \
-#    device/motorola/spyder/prebuilt/camerafix/libtiutils.so:system/lib/libtiutils.so 
-    #device/motorola/spyder/prebuilt/camerafix/hw/camera.omap4.so:system/lib/hw/camera.omap4.so \
+PRODUCT_COPY_FILES += \
+    device/motorola/spyder/camera/TICameraCameraProperties.xml:system/etc/TICameraCameraProperties.xml \
+    device/motorola/spyder/camera/camera.omap4.so:system/lib/hw/camera.omap4.so \
+    device/motorola/spyder/camera/libcamera.so:system/lib/libcamera.so \
+    device/motorola/spyder/camera/libomxcameraadapter.so:system/lib/libomxcameraadapter.so \
+    device/motorola/spyder/camera/libtiutils.so:system/lib/libtiutils.so \
 
 # WirelessTether
 PRODUCT_COPY_FILES += \

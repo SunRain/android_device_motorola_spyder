@@ -1,3 +1,6 @@
+ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),spyder)
+
+
 # reset our local path
 LOCAL_PATH :=  $(call my-dir)
 
@@ -12,4 +15,6 @@ LOCAL_MODULE_STEM := 2nd-init
 LOCAL_MODULE_PATH := $(PRODUCT_OUT)/system/bootmenu/binary
 
 include $(BUILD_EXECUTABLE)
+
+endif #TARGET_BOOTLOADER_BOARD_NAME
 

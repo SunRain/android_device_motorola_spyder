@@ -1,4 +1,5 @@
 on init
+
     exec /sbin/fixboot.sh
 
     export ANDROID_CACHE /cache
@@ -7,20 +8,40 @@ on init
     export EXTERNAL_STORAGE /mnt/sdcard
     export SECONDARY_STORAGE /mnt/sdcard-ext
 
+    mkdir /mnt/sdcard-ext 0000 system system # Feature 34534
+    symlink /mnt/sdcard-ext /sdcard-ext # Feature 34534
+    mkdir /pds 0775 system system
+    mkdir /data/tmp 0777 system system
+    mkdir /preinstall 0771 system system
+    mkdir /cdrom 0770 system system
+    symlink /data/tmp /tmp
+    mkdir /osh 0755 root root
+# Mount Points for External Storage Devices
+    mkdir /mnt/usbdisk_1.1.1 0755 system system
+    mkdir /mnt/usbdisk_1.1 0755 system system
+    mkdir /mnt/usbdisk_1.2 0755 system system
+    mkdir /mnt/usbdisk_1.3 0755 system system
+    mkdir /mnt/usbdisk_1.4 0755 system system
+    mkdir /mnt/usbdisk_1.5 0755 system system
+    mkdir /mnt/usbdisk_1.6 0755 system system
+    mkdir /mnt/usbdisk_1.7 0755 system system
 on fs
+
     mount ext3 /dev/block/mmcblk1p20 /system wait noatime nodiratime barrier=1
+    mount ext3 /dev/block/mmcblk1p7 /pds nosuid nodev noatime nodiratime
     mount ext3 /dev/block/mmcblk1p24 /data nosuid nodev noatime nodiratime
     mount ext3 /dev/block/mmcblk1p21 /cache nosuid nodev noatime nodiratime
+# disabling webtop for now
+#    exec /system/bin/logwrapper /system/bin/mountosh -d /dev/block/webtop
+#    exec /osh/etc/init.d/udev start
 
 on post-fs-data
-# Enable ADB
-    write /dev/usb_device_mode msc_adb
+    # We chown/chmod /pds again so because mount is run as root + defaults
+    chown system system /pds
+    chmod 0775 /pds
+#    chmod 0771 /preinstall
+#    chown system system /preinstall
 
-# Backward compatibility
-    symlink /dev /dev/netmux
-
-# prepare generic keypad name
-    exec /init_prep_keypad.sh
     mount ext3 /dev/block/mmcblk1p20 /system ro noatime nodiratime remount
     mount rootfs rootfs / rw remount
 
@@ -29,20 +50,13 @@ on post-fs-data
 
     symlink /dev/ttyGS0 /dev/acm0
 
-# Create mountpoints and mount tmpfs
-
-    mkdir /mnt 0775 root system
-    mkdir /osh 0755 root root
-    mkdir /preinstall 0755 system system
-    mkdir /pds 0775 system system
-    mkdir /data/tmp 0777 system system
+    # Create mountpoints and mount tmpfs
     mkdir /misc 0770 system misc
     mkdir /sd-ext 0771 system system
 
     mkdir /mnt/sdcard 0000 system system
     mkdir /mnt/sdcard-ext 0000 system system
 
-    symlink /data/tmp /tmp
     symlink /mnt/sdcard /sdcard
     symlink /mnt/sdcard-ext /sdcard-ext
 
@@ -70,15 +84,13 @@ on post-fs-data
     chmod 0220 /proc/sysrq-trigger
 
 #Set the default value for bluedroid_ref
-#    write /data/tmp/bluedroid_ref 0
-#    chown system system /data/tmp/bluedroid_ref
+    #    write /data/tmp/bluedroid_ref 0
+    #    chown system system /data/tmp/bluedroid_ref
 
 # Configure kernel options
-    # Enable automatic power control for EHCI USB IPC
-    write /sys/devices/platform/ehci-omap.0/usb1/power/level auto
-    write /sys/devices/platform/ehci-omap.0/usb1/power/autosuspend 0
-    write /sys/devices/platform/ehci-omap.0/usb1/1-3/power/level auto
-    write /sys/devices/platform/ehci-omap.0/usb1/1-3/power/autosuspend 0
+    # Enable automatic power control for OHCI USB IPC
+    write /sys/devices/platform/ohci-omap3/usb1/1-1/power/control auto
+
 # NFC configuration
     # Reset system time
     write /sys/class/rtc/rtc0/unsecured_rtc on
@@ -87,6 +99,8 @@ on post-fs-data
     write /proc/sys/fs/suid_dumpable 2
     # Set core pattern
     write /proc/sys/kernel/core_pattern "|/system/bin/coredump %e %p %t"
+    # Set core filter
+    write /proc/self/coredump_filter "0x7f"
     # Power Management
     write /sys/power/sleep_while_idle 1
     write /sys/power/enable_off_mode 1
@@ -102,29 +116,26 @@ on post-fs-data
     write /sys/power/sr_vdd2_autocomp 1
     write /sys/power/enable_abb_mode 1
     write /sys/devices/w1\ bus\ master/w1_master_search 2
+    write /sys/devices/system/cpu/cpu0/cpuidle/enable_state 1
+    # Increase MMC block device readaheads
+    write /sys/block/mmcblk0/queue/read_ahead_kb 1024
+    write /sys/block/mmcblk1/queue/read_ahead_kb 1024
+    # Set enable_smp if BT LE is supported
+    write /sys/module/bluetooth/parameters/enable_smp 1
 # Change ownership for vibrators
     chown system system /sys/class/timed_output/lvibrator/enable
     chown system system /sys/class/timed_output/vibrator/enable
     chown system system /sys/class/timed_output/vibrator/sweep
+
 # Change permission of vibrators
     chmod 0660 /sys/class/timed_output/lvibrator/enable
     chmod 0660 /sys/class/timed_output/vibrator/enable
     chmod 0660 /sys/class/timed_output/vibrator/sweep
-# Mount Points for External Storage Devices
-    mkdir /mnt/usbdisk_1.1 0755 system system
-    mkdir /mnt/usbdisk_1.2 0755 system system
-    mkdir /mnt/usbdisk_1.3 0755 system system
-    mkdir /mnt/usbdisk_1.4 0755 system system
-    mkdir /mnt/usbdisk_1.5 0755 system system
-    mkdir /mnt/usbdisk_1.6 0755 system system
-    mkdir /mnt/usbdisk_1.7 0755 system system
+# Change permission of tiler's free_page_max to allow mot_osh access
+    chmod 0660 /sys/module/tiler_omap/parameters/free_page_max
+    chown mot_osh mot_osh /sys/module/tiler_omap/parameters/free_page_max
+
 # Mount mtd partitions
-    # mount /pds as r/w
-    # We chown/chmod /pds again so because mount is run as root + defaults
-    exec /system/bin/logwrapper /system/bin/mount_ext3.sh pds /pds
-    chown system system /pds
-    chmod 0775 /pds
-    mkdir /pds/comm_drv 0770 radio radio
     mkdir /pds/public 0775 system shell
     chown system shell /pds/public
     chmod 0775 /pds/public
@@ -138,11 +149,6 @@ on post-fs-data
     chown system media /pds/camera/module1
     chmod 0775 /pds/camera/module1
 
-# Mount preinstall partition
-#    mkdir /preinstall 0771 system system
-#    exec /system/bin/logwrapper /system/bin/mount_ext3.sh preinstall /preinstall
-#    chmod 0771 /preinstall
-#    chown system system /preinstall
 
 # Create basic filesystem structure
 
@@ -171,9 +177,49 @@ on post-fs-data
     chown mot_whisper mot_whisper /pds/whisper/whisper_only
     chmod 0700 /pds/whisper/whisper_only
     chown mot_whisper /pds/whisper/whisper_only/vector0.bin
-    mkdir /data/gki 0770 radio radio
-    mkdir /tmp/commdrv 0770 radio radio
-    mkdir /data/comm_drv 0770 radio radio
+
+    mkdir /data/misc/vpn/profiles 0770 system system
+
+    mkdir /data/tmp 0777 system system
+
+    mkdir /cache/download 0771 system cache
+    mkdir /cache/lost+found 0770 root root
+
+# usbd permissions
+    mkdir /data/usbd 0777 system system
+
+# Motorola tcmd/12m stuff
+    mkdir /data/local/12m 0771 mot_tcmd shell
+    mkdir /data/local/12m/batch 0771 mot_tcmd shell
+    chown mot_tcmd shell /data/local
+    chown mot_tcmd shell /data/local/12m
+    chown mot_tcmd shell /data/local/12m/batch
+    chown mot_tcmd shell /data/local/tmp
+    mkdir /data/local/download 0771 system cache
+
+    # double check the perms, in case lost+found already exists, and set owner
+    chown root root /data/lost+found
+    chmod 0770 /data/lost+found
+    chown root root /cache/lost+found
+    chmod 0770 /cache/lost+found
+
+#    chown system system /sys/class/android_usb/android0/f_mass_storage/lun/file
+#    chmod 0660 /sys/class/android_usb/android0/f_mass_storage/lun/file
+#    chown system system /sys/class/android_usb/android0/f_rndis/ethaddr
+#    chmod 0660 /sys/class/android_usb/android0/f_rndis/ethaddr
+
+    # allow net_raw to have access to /dev/socket directory
+#    chown root net_raw /dev/socket
+#    chmod 0775 /dev/socket
+
+    # allow system to modify cpufreq control files
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chown root system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+
     # bluetooth power up/down interface
     write sys/class/rfkill/rfkill0/state 0
     write sys/class/rfkill/rfkill0/type bluetooth
@@ -182,8 +228,9 @@ on post-fs-data
     chmod 0664 /sys/class/rfkill/rfkill0/type
     chmod 0664 /sys/class/rfkill/rfkill0/state
 
-# usbd permissions
-    mkdir /data/usbd 0777 system system
+    # LTE Radio file
+    chown radio radio /sys/class/radio/w3g_lte/command
+    chmod 777 /sys/class/radio/w3g_lte/command
 
     # create logger folder
     mkdir /data/logger 0770 radio log
@@ -192,12 +239,13 @@ on post-fs-data
     mkdir /data/panicreports
     chown root radio /data/panicreports
     chmod 0775 /data/panicreports
-
+    mkdir /data/tombstones
+    chown system mot_tombstone /data/tombstones
+    chmod 0775 /data/tombstones
     # Backup ramconsole on abnormal reboot.
     copy /proc/last_kmsg /data/dontpanic/last_kmsg
     chown root log /data/dontpanic/last_kmsg
     chmod 0644 /data/dontpanic/last_kmsg
-
     # workaround: in spyder somebody deletes the logfile.
     # we have to back it up.
     copy /data/dontpanic/apanic_console /data/logger/last_apanic_console
@@ -212,13 +260,12 @@ on post-fs-data
 
     #Create location directory
     mkdir /data/location 0771 radio radio
-    #Create opprof directory
-    mkdir /data/opprof 0770 radio shell
+
     # Create anr directory and change permission to 777 to save trace.txt
     mkdir /data/anr
     chmod 0777 /data/anr
 
-# create the necessary dirs for tpapi with proper permission
+# create the necessary data dirs for tpapi with proper permission
     mkdir /pds/security
     mkdir /data/tpapi
     mkdir /data/tpapi/etc
@@ -234,6 +281,28 @@ on post-fs-data
     chown mot_tpapi mot_tpapi /pds/security/system.bin
     chown mot_tpapi mot_tpapi /pds/security/storage.bin
     chown mot_tpapi mot_tpapi /pds/security/keymaptable.dat
+# Permission for USB
+#    chown root mot_usb /proc/mtpctl
+#    chmod 0660 /proc/mtpctl
+# Install product specific kernel modules
+    exec /system/bin/load_modules.sh
+# chown/chmod for FOTA
+    chown system system /cache/fota
+    chmod 0770 /cache/fota
+#Set the default value for bluedroid_ref
+    write /data/tmp/bluedroid_ref 0
+    chown system system /data/tmp/bluedroid_ref
+    chmod 0660 /data/tmp/bluedroid_ref
+    # create moto specific dirs for mystuff
+    mkdir /data/download 0775 system system
+    mkdir /data/download/mystuff 0775 system system
+    # create moto specific dirs for wifi
+    mkdir /data/system 0771 system system
+    # wifi dirs
+    mkdir /data/misc/wifi 0770 wifi wifi
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    chown dhcp dhcp /data/misc/dhcp
     chown mot_tpapi mot_tpapi /data/tpapi
     chown mot_tpapi mot_tpapi /data/tpapi/etc
     chown mot_tpapi mot_tpapi /data/tpapi/etc/tpa
@@ -243,7 +312,8 @@ on post-fs-data
 
 # directory for encryption management tool, enc_mgt_tool
     mkdir /data/emt
-    chmod 0700 /data/emt
+    chown root system /data/emt
+    chmod 0770 /data/emt
     # Create wmdrm directory
     mkdir /pds/wmdrm 0775 mot_drm mot_drm
     # Temp workaround for HP library cleanup
@@ -260,14 +330,6 @@ on post-fs-data
     chown media graphics /dev/video1
     chown media graphics /dev/video2
     mount rootfs rootfs / ro remount
-
-# Install kernel modules
-# Install BP related kernel modules
-    #Start the engine modules for netmux first for other daemons depends on it
-    insmod /system/lib/modules/netmux.ko
-    insmod /system/lib/modules/netmux_linkdriver.ko
-    insmod /system/lib/modules/modem_pm_driver.ko
-#    insmod /system/lib/modules/sec.ko
 
 # Load ipv6 netfilter/tables support
     insmod /system/lib/modules/xt_hashlimit.ko
@@ -294,17 +356,23 @@ on post-fs-data
     insmod /system/lib/modules/xt_qtaguid.ko
     insmod /system/lib/modules/xt_quota2.ko
 
+# Allow everybody to read the xt_qtaguid resource tracking misc dev.
+# This is needed by any process that uses socket tagging.
+#    chmod 0644 /dev/xt_qtaguid
+
 # Install product specific kernel modules
     exec /system/bin/load_modules.sh
 
-# chown/chmod for FOTA
-    chown system system /cache/fota
-    chmod 0770 /cache/fota
+# MTU for USB tethering
+    write /sys/class/net/gether0/mtu 1428
 
 on early-boot
+# set the size of the dns cache.
+    setprop ro.net.dns_cache_size 400
 # Define the BLAN interface
     setprop ro.blan.interface usb0
-
+# Launch SMC script and allow it to read cmdline option
+    chmod 0444 /proc/cmdline
 # mount eCryptFS if required
     start smc
     exec /system/bin/enc_mgt_tool
@@ -322,8 +390,14 @@ on boot
     setprop ro.sys.atvc_allow_efem 0
     setprop ro.sys.atvc_allow_bp_log 0
     setprop ro.sys.atvc_allow_ap_mot_log 0
-    setprop ro.sys.atvc_allow_gki_log 0
-
+    setprop ro.sys.atvc_allow_simswap 0
+# OSH properties
+    setprop sys.SystemMode RM_SM_MOBILE
+    setprop sys.FbOwner 3
+    setprop sys.DispOwnerLcd 3
+    setprop sys.DispOwnerHdmi 7
+    setprop sys.AiwFocus 3
+    setprop sys.AMActiveTask 2
 # Change the ownership of led files.
    chown media media /sys/class/leds/af-led/brightness
    chown system system /sys/class/leds/lcd-backlight/als
@@ -367,8 +441,18 @@ on boot
    chown system system /sys/class/backlight/lm3532_bl/brightness
    chmod 0660 /sys/class/backlight/430_540_960_amoled_bl/brightness
    chown system system /sys/class/backlight/430_540_960_amoled_bl/brightness
+   chmod 0660 /sys/devices/omapdss/display0/acl_mode
+   chown system system /sys/devices/omapdss/display0/acl_mode
+# Change the ownership of sensor files.
+   chmod 0660 /sys/module/bmp180/parameters/accuracy
+   chown system system /sys/module/bmp180/parameters/accuracy
+   chmod 0660 /sys/module/bmp180/parameters/poll_interval
+   chown system system /sys/module/bmp180/parameters/poll_interval
+   chmod 0660 /sys/module/bmp180/parameters/enable
+   chown system system /sys/module/bmp180/parameters/enable
 # Change the ownership of touch screen file
-   chown root mot_tcmd /sys/bus/i2c/drivers/qtouch-obp-ts/2-004a/irq_enable
+   chmod 0660 /sys/bus/i2c/drivers/atmxt-i2c/2-004a/drv_irq
+   chown root mot_tcmd /sys/bus/i2c/drivers/atmxt-i2c/2-004a/drv_irq
 # Change the ownership of cpcap
    chmod 0666 /dev/cpcap
    chmod 0666 /dev/cpcap_batt
@@ -405,17 +489,12 @@ on boot
    chown media media /dev/omap-devh2
    chmod 0660 /sys/devices/platform/omapdss/overlay0/zorder
    chown system system /sys/devices/platform/omapdss/overlay0/zorder
-   # change permissions for Overlay
-   chmod 0660 /dev/video1
-   chmod 0660 /dev/video2
-   chmod 0660 /dev/video3
-   chown system system /dev/video1
-   chown system system /dev/video2
-   chown system system /dev/video3
    chmod 0660 /sys/bus/usb/devices/usb1/power/control
    chmod 0660 /sys/bus/usb/devices/usb2/power/control
    chown system radio /sys/bus/usb/devices/usb1/power/control
    chown system radio /sys/bus/usb/devices/usb2/power/control
+   # change permission/ownership for command sys file of mdm6600 ctrl driver
+   chown system radio /sys/class/radio/mdm6600/command
    # change permissions for display CABC mode
    chmod 0660 /sys/devices/omapdss/display0/cabc_mode
    chown system system /sys/devices/omapdss/display0/cabc_mode
@@ -519,6 +598,25 @@ on boot
    # change permissions for omap_cpuboost parameters
    chmod 0660 /sys/module/omap_cpuboost/parameters/cpuboost_time
    chown media media /sys/module/omap_cpuboost/parameters/cpuboost_time
+   # Change permission of secret_off to allow system access
+   chmod 0660 /sys/devices/omapdss/display0/secret_off
+   chown system system /sys/devices/omapdss/display0/secret_off
+   # Change file permissions for Thermal Manager
+   # For OMAP CPU Temp
+   chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+   chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+   chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed
+   chown system system /sys/class/hwmon/hwmon1/device/temp1_max
+   chown system system /sys/class/hwmon/hwmon1/device/temp1_max_hyst
+   chown system system /sys/class/hwmon/hwmon1/device/update_rate
+   # for PCB Temp
+   chown system system /sys/devices/platform/omap4_duty_cycle/nitro_rate
+   chown system system /sys/devices/platform/omap4_duty_cycle/cooling_rate
+   chown system system /sys/devices/platform/omap4_duty_cycle/nitro_interval
+   chown system system /sys/devices/platform/omap4_duty_cycle/nitro_percentage
+   chown system system /sys/devices/platform/omap4_duty_cycle/enabled
+   chown system system /sys/class/hwmon/hwmon0/device/temp1_max
+   chown system system /sys/class/hwmon/hwmon0/device/temp1_max_hyst
 
    # change permissions for Overlay
    chmod 0660 /dev/video1
@@ -530,14 +628,46 @@ on boot
 
 # Define TCP buffer sizes for various networks
 # ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
-    setprop net.tcp.buffersize.umts 64000,128000,256000,4096,16384,110208
-    setprop net.tcp.buffersize.edge 16384,35040,65536,4096,16384,35040
+    setprop net.tcp.buffersize.default 65536,131072,262144,4096,16384,131072
+    setprop net.tcp.buffersize.wifi 65536,131072,262144,4096,16384,131072
+    setprop net.tcp.buffersize.umts 65536,131072,262144,4096,16384,131072
+    setprop net.tcp.buffersize.edge 16384,32768,65536,4096,16384,32768
+    setprop net.tcp.buffersize.gprs 4096,8192,12288,4096,8192,12288
+    setprop net.tcp.buffersize.cdma 4096,12288,24576,4096,12288,24576
+    setprop net.tcp.buffersize.evdo 16384,32768,65536,4096,16384,51200
+    setprop net.tcp.buffersize.2ghotspot 4096,12288,24576,4096,12288,24576
+    setprop net.tcp.buffersize.3ghotspot 4096,16384,51200,16384,32768,65536
+# Define optimized TCP buffer sizes for various networks
+# ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
+    setprop net.tcp.buffersize.default 131072,262144,524288,4096,16384,131072
+    setprop net.tcp.buffersize.wifi 131072,262144,524288,4096,16384,131072
+    setprop net.tcp.buffersize.umts 131072,262144,524288,4096,16384,131072
+    setprop net.tcp.buffersize.edge 16384,32768,65536,4096,16384,32768
+    setprop net.tcp.buffersize.gprs 4096,8192,12288,4096,8192,12288
+
+# Memory management.  Basic kernel parameters, and allow the high
+# level system server to be able to adjust the kernel OOM driver
+# paramters to match how it is managing things.
+#    write /sys/module/lowmemorykiller/parameters/minfree 2048,3072,4096,6144,7168,8192
+
+    setprop net.tcp.buffersize.lte 524288,1048576,2097152,262144,524288,1048576
+    setprop net.tcp.buffersize.4ghotspot 262144,524288,1048576,524288,1048576,2097152
+
 # Camera related
    chmod 0660 /dev/hplens-omap
    chown media camera /dev/hplens-omap
 
 # Enable panic on softlockup
     write /proc/sys/kernel/softlockup_panic 1
+
+# Load traffic shaping modules
+    insmod /system/lib/modules/ifb.ko
+    insmod /system/lib/modules/act_mirred.ko
+    insmod /system/lib/modules/sch_ingress.ko
+    insmod /system/lib/modules/act_police.ko
+    insmod /system/lib/modules/cls_u32.ko
+    insmod /system/lib/modules/sch_htb.ko
+    insmod /system/lib/modules/em_u32.ko
 
 # Load Authentec VPN kernel module
     insmod /system/lib/modules/vpnclient.ko
@@ -550,6 +680,39 @@ on boot
 
 # Set core max size (2G)
     setrlimit 4 2147483648 2147483648
+
+# Define the oom_adj values for the classes of processes that can be
+# killed by the kernel.  These are used in ActivityManagerService.
+    setprop ro.FOREGROUND_APP_ADJ 0
+    setprop ro.VISIBLE_APP_ADJ 1
+    setprop ro.PERCEPTIBLE_APP_ADJ 2
+    setprop ro.HEAVY_WEIGHT_APP_ADJ 3
+    setprop ro.SECONDARY_SERVER_ADJ 4
+    setprop ro.BACKUP_APP_ADJ 5
+    setprop ro.HOME_APP_ADJ 6
+    setprop ro.HIDDEN_APP_MIN_ADJ 7
+    setprop ro.EMPTY_APP_ADJ 15
+
+# Define the memory thresholds at which the above process classes will
+# be killed.  These numbers are in pages (4k).
+    setprop ro.FOREGROUND_APP_MEM 2048
+    setprop ro.VISIBLE_APP_MEM 3072
+    setprop ro.PERCEPTIBLE_APP_MEM 4096
+    setprop ro.HEAVY_WEIGHT_APP_MEM 4096
+    setprop ro.SECONDARY_SERVER_MEM 6144
+    setprop ro.BACKUP_APP_MEM 6144
+    setprop ro.HOME_APP_MEM 6144
+    setprop ro.HIDDEN_APP_MEM 7168
+    setprop ro.EMPTY_APP_MEM 8192
+
+    mount debugfs /sys/kernel/debug /sys/kernel/debug
+
+# Write value must be consistent with the above properties.
+# Note that the driver only supports 6 slots, so we have combined some of
+# the classes into the same memory level; the associated processes of higher
+# classes will still be killed first.
+    write /sys/module/lowmemorykiller/parameters/adj 0,1,2,4,7,15
+
 # The properties introduced by moto
 # Adjust the out of memory thresholds to account for the larget
 # space on sholes. These numbers are in pages (4k). Must be kept
@@ -588,7 +751,6 @@ on property:sys.chargeonly.mode=1
     start console
     start battd
     start chargeonly
-    write /data/simpin lock
     stop zygote
 
 on property:persist.service.adb.enable=1
@@ -609,22 +771,12 @@ on property:tcmd.suspend=1
 on property:tcmd.suspend=2
     class_stop main
 
-#start console for userdebug and eng builds
-on property:ro.debuggable=1
-    start console
-
-on property:ro.sys.atvc_allow_gki_log=1
-    start gkilogd
-on property:ro.sys.atvc_allow_gki_log=0
-    stop gkilogd
 # Moto safe power down
 on property:sys.reboot=1
-    stop ssmgrd
     exec /system/bin/sleep 10
     exec /system/bin/reboot
 
 on property:sys.shutdown=1
-    stop ssmgrd
     exec /system/bin/sleep 10
     exec /system/bin/reboot -p
 
@@ -643,44 +795,25 @@ on property:ro.hdcp.support=2
     chown system media /dev/omap-hdcp
     chmod 0660 /dev/omap-hdcp
 
+# The following services are added by moto
+#service qe /xbin/qe /system
+#    class core
+#    oneshot
+
 service telnet /system/bin/telnetd
     class core
     oneshot
 
-service usbd /system/bin/usbd
+service usbd /system/bin/usbd -r
+    user root
+    group shell
+    socket usbd 777 root shell
     class core
 
 service chargeonly /system/bin/charge_only_mode
     group root
     oneshot
     disabled
-
-service nvm-daemon /system/usr/bin/nvm_daemon
-    class core
-    user radio
-    group radio
-# start commdrv pds script
-
-service start_commdrv /system/bin/sh /system/etc/motorola/comm_drv/commdrv_fs.sh
-    class core
-    oneshot
-    user radio
-    group radio system cache
-
-service gkisystem /system/bin/gkisystem
-    class core
-    socket location_shim stream 660 radio system
-    socket gpshal_socket stream 660 radio system
-    socket opprofdaemon stream 660 radio system
-    socket gkilog_sock stream 660 radio radio
-    group radio system mot_accy mot_secclkd
-    onrestart exec /system/usr/bin/gki_pd_notifier
-
-service rild_tcmd /system/bin/rild_tcmd
-    class core
-    socket rild_tcmd stream 0660 radio mot_tcmd
-    user radio
-    group radio
 
 service battd /system/bin/battd
     class core
@@ -703,20 +836,6 @@ service msp430 /system/bin/msp430 boot
     class core
     user compass
     group compass misc input
-    oneshot
-
-service bplogd_daemon /system/usr/bin/bplogd_daemon
-    class core
-    socket dlog_cmds stream 660 radio log
-    socket bp_pd_status stream 660 radio log
-    socket bp_aol_cmd stream 666 radio log
-    user radio
-    group radio inet log sdcard_rw mount
-    oneshot
-
-service ssmgrd /system/xbin/ssmgrd
-    class late_start
-    group radio input mot_pwric
     oneshot
 
 service uim /system/bin/uim-sysfs
@@ -772,7 +891,7 @@ service btdhcpd /system/bin/dnsmasq -C /system/etc/btpan.conf
     disabled
     oneshot
 
-service map /system/bin/sdptool add --channel=20 --network=1 MAP
+service map /system/bin/sdptool add --channel=20 --network=2 MAP
     class late_start
     user bluetooth
     group bluetooth net_bt_admin
@@ -811,17 +930,15 @@ on property:tcmd.unload_wlan=1
 on property:tcmd.unload_wlan=2
     exec /system/bin/rmmod tiwlan_drv
     setprop wlan.driver.status unloaded
-
+# turn on bluetooth for tcmd
+on property:tcmd.bt_mod=1
+    insmod /system/lib/modules/wl127x_test.ko
+#turn off bluetooth for tcmd
+on property:tcmd.bt_mod=0
+    exec /system/bin/rmmod wl127x_test
 #execute tcmdhelp
 on property:tcmd.start_tcmdhelp=1
     start tcmdhelp
-
-service panic_daemon /system/usr/bin/panic_daemon
-    class late_start
-    user radio
-    group log radio system graphics sdcard_rw
-    socket panic_daemon stream 660 radio radio
-    onrestart exec /system/bin/reboot
 
 # Ecompass daemon
 service akmd2 /system/bin/akmd2
@@ -851,10 +968,6 @@ service ap_fmloader_rfmd /system/bin/logwrapper /system/bin/tiap_loader -f /syst
 
 service wpa_supplicant /system/bin/wpa_supplicant -Dtiwlan0 -itiwlan0 -c/data/misc/wifi/wpa_supplicant.conf
     class late_start
-# we will start as root and wpa_supplicant will switch to user wifi
-# after setting up the capabilities required for WEXT
-#   user wifi
-#   group wifi inet keystore
     socket wpa_tiwlan0 dgram 660 wifi wifi
     disabled
     oneshot
@@ -907,6 +1020,12 @@ service pvrsrv /system/bin/pvrsrvinit
     user root
     oneshot
 
+service pppd-ril /system/bin/pppd-ril /dev/ttyUSB0 call pppd-ril.options plugin /system/lib/libpppd_plugin-ril.so
+    class late_start
+    user root
+    disabled
+    oneshot
+
 service smc /system/bin/startup_smc.sh
     class core
     user mot_tpapi
@@ -918,29 +1037,17 @@ service modemlog /system/bin/modemlog
     class core
     oneshot
 
-service locDrv /system/usr/bin/brcm_guci_drv -config /system/etc/gpsconfig.xml
+service ftmipcd /system/bin/ftmipcd
     class late_start
     user radio
-    group radio inet sdcard_rw
-
-service pm_init /system/bin/sh /system/usr/bin/pm_init.sh
-    class late_start
+    group radio inet
     oneshot
 
-service modemlog /system/bin/modemlog
-   class core
-   oneshot
-
-service gkilogd /system/bin/gkilogd
+service qbplogd /system/bin/qbplogd
     class late_start
-    socket gki_aol_cmd stream 660 radio log
     user radio
-    group radio log sdcard_rw
-
-service fmradio /system/bin/fmradioserver
-    class late_start
-    user system
-    group bluetooth net_bt_admin net_raw net_admin misc
+    group sdcard_rw radio inet
+    oneshot
     disabled
 
 #service dlnasrv /system/bin/dlnasrv
@@ -956,8 +1063,9 @@ service dund_dialup /system/bin/dund --listen --channel=6 --nodetach --dialup
     disabled
     oneshot
 
-#on property:dev.bootcomplete=1
-#    start loadpreinstalls
+on property:dev.bootcomplete=1
+    start savebpver
+    start drm
 
 # From Usb.apk code
 #    public static final int USB_MODE_NGP = 0;
@@ -1013,15 +1121,20 @@ on property:sys.usb.config=mtp,adb
     start adbd
     setprop sys.usb.state $sys.usb.config
 
+service mdm_panicd /system/bin/mdm_panicd
+    class late_start
+    oneshot
+
+#get BP version and save to misc
+#service savebpver /system/bin/SaveBPVer
+#    class late_start
+#    oneshot
+
 service secclkd /system/bin/secclkd
     class late_start
     socket secclk_socket stream 660 mot_secclkd mot_secclkd
     user mot_tpapi
     group mot_tpapi mot_sec_rtc mot_secclkd
-    oneshot
-
-service dla /system/bin/dla
-    class late_start
     oneshot
 
 #start Authentec VPN service
@@ -1036,10 +1149,99 @@ service syslinkdaemon /system/bin/syslink_daemon.out -f /system/lib/ducati/Notif
     user media
     group video
 
+#IKCBS-229 start RescueStarter for MobileRescue
+#service RescueStarter /system/bin/RescueStarter
+#    user nobody
+#    group input graphics
+#    class late_start
+
+#service gadget-lte-modem /system/bin/tty2ttyd /dev/ttyACM0 /dev/ttyGS1 0 512
+service gadget-lte-modem /system/bin/tty2ttyd ril.wrigley.modem.tty /dev/ttyGS1 0 512
+    user radio
+    group radio
+    disabled
+
+service wrigley-diag /system/bin/wrigley-diag.sh
+    oneshot
+    disabled
+
+service logcatd-blan /system/bin/logcatd-blan
+    user root
+#     Immediately drops root, keeps CAP_SYS_ADMIN, and runs as below
+     user system
+     group system log inet
+    disabled
+
+service gadget-qbp-modem /system/bin/tty2ttyd persist.ril.modem.ttydevice /dev/ttyGS2 0 1024
+    user radio
+    group radio
+    disabled
+
+service gadget-qbp-diag /system/bin/tty2ttyd persist.ril.diag.ttydevice /dev/ttyGS3 0 1024
+    user radio
+    group radio
+    disabled
+
 on property:ro.bootmode=bp-tools
     start tcmd
+    start gadget-qbp-diag
+    start wrigley-diag
+    start logcatd-blan
 
-#Check available storage space to execute device encryption or decryprion
-on property:sys.mot.encrypt.test=1
-    exec /system/bin/encryption_test
-    exec /system/bin/setprop sys.mot.encrypt.test ""
+#OSH Startup
+service fbcp /etc/init.d/start_fbcp.sh
+    user mot_osh
+    group mot_osh
+    oneshot
+    disabled
+on property:init.svc.zygote=running
+    start fbcp
+on property:dev.bootcomplete=1
+    exec /ubuntu.sh
+on property:sys.SystemMode=RM_SM_DOCKED
+    exec /osh/etc/init.d/startX.sh
+
+service mdm_usb_suspend /system/bin/enable_mdm_usb_suspend.sh
+    class core
+    group radio
+    oneshot
+
+service hfag /system/bin/sdptool add --channel=10 HFAG
+    class late_start
+    user bluetooth
+    group bluetooth net_bt_admin
+    disabled
+    oneshot
+
+service hsag /system/bin/sdptool add --channel=11 HSAG
+    class late_start
+    user bluetooth
+    group bluetooth net_bt_admin
+    disabled
+    oneshot
+
+service opush /system/bin/sdptool add --channel=12 OPUSH
+    class late_start
+    user bluetooth
+    group bluetooth net_bt_admin
+    disabled
+    oneshot
+
+service pbap  /system/bin/sdptool add --channel=19 PBAP
+    class late_start
+    user bluetooth
+    group bluetooth net_bt_admin
+    disabled
+    oneshot
+
+service dnsmasq /system/bin/logwrapper /system/bin/dnsmasq -C/data/misc/wifi/dns.conf -k
+    class late_start
+    group wifi
+    disabled
+    oneshot
+
+#service tund /system/bin/tund
+#    class core
+#    socket tund stream 0660 vpn system
+#    ioprio be 2
+

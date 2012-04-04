@@ -142,6 +142,7 @@ on post-fs
     insmod /system/lib/modules/cfg80211.ko
     insmod /system/lib/modules/mac80211.ko
     insmod /system/lib/modules/wl12xx.ko
+	
 on post-fs-data
     copy /proc/apanic_app_threads /data/dontpanic/apanic_app_threads
     chown root log /data/dontpanic/apanic_app_threads
@@ -226,7 +227,9 @@ on early-boot
 # transfer certificates from CertificateManager
     start upgrade_certs
     class_start media_early_init
+	
 on boot
+
 # Define Motorola DBVC ATVC Property defaults (failsafe properties)
     setprop ro.sys.atvc_allow_netmon_usb 0
     setprop ro.sys.atvc_allow_netmon_ih 0
@@ -501,12 +504,14 @@ on boot
     chmod 660 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
     chmod 660 /proc/irq/124/smp_affinity
     chmod 660 /proc/irq/125/smp_affinity
+	
 on charger
     trigger early-fs
     trigger fs
     trigger post-fs
     trigger post-fs-data
     trigger start-charging
+	
 on start-charging
     chown system system /sys/power/state
     chmod 0660 /sys/power/state
@@ -525,6 +530,7 @@ on start-charging
     start battd
     start whisperd
     start charge_only_mode
+	
 # The properties introduced by moto
 on property:sys.chargeonly.mode=1
     class_stop core

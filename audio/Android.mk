@@ -13,9 +13,21 @@ LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES:= AudioPolicyManager.cpp
-LOCAL_SHARED_LIBRARIES:= libc libcutils libutils libmedia
-LOCAL_STATIC_LIBRARIES := libmedia_helper
-LOCAL_WHOLE_STATIC_LIBRARIES:= libaudiopolicy_legacy
+LOCAL_SHARED_LIBRARIES:= \
+	libc \
+	libcutils \
+	libutils \
+	libmedia \
+    libm \
+    libaudiopolicy \
+    libc
+
+LOCAL_STATIC_LIBRARIES := \
+	libmedia_helper
+
+LOCAL_WHOLE_STATIC_LIBRARIES:= \
+	libaudiopolicy_legacy
+
 LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
 LOCAL_MODULE:= audio_policy.spyder
 LOCAL_MODULE_TAGS := optional
@@ -26,23 +38,33 @@ endif
 
 include $(BUILD_SHARED_LIBRARY)
 
+#
+# audio.primary.spyder
+#
 
 ifeq ($(BOARD_USES_AUDIO_LEGACY),true)
 
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 LOCAL_MODULE := audio.primary.spyder
-LOCAL_MODULE_STEM := audio.primary.$(TARGET_BOARD_PLATFORM)
+#LOCAL_MODULE_STEM := audio.primary.$(TARGET_BOARD_PLATFORM)
 LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
 LOCAL_MODULE_TAGS := optional
 LOCAL_SHARED_LIBRARIES := \
     libcutils \
     libutils \
     libmedia \
-    libhardware
-LOCAL_SHARED_LIBRARIES += libdl
-LOCAL_SHARED_LIBRARIES += libaudio libaudio_ext
-LOCAL_STATIC_LIBRARIES := \
+    libhardware \
+    libhardware_legacy \
+	libdl \
+	libaudio \
+	libaudio_ext \
+    libasound \
+    liblog \
+    libm \
+    liba2dp \
+
+LOCAL_STATIC_LIBRARIES :=  \
     libmedia_helper
 LOCAL_WHOLE_STATIC_LIBRARIES := \
     libaudiohw_legacy
