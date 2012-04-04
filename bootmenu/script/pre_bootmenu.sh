@@ -54,11 +54,6 @@ $BB chmod +rx /sbin/*
 # custom adbd (allow always root)
 cp -f /system/bootmenu/binary/adbd /sbin/adbd.root
 cp /system/bin/bootmenu /sbin/bootmenu
-#cp /system/bootmenu/binary/getprop /sbin
-#cp /system/bootmenu/binary/hijack.killall /sbin
-#cp /system/bootmenu/binary/stop /sbin
-#cp /system/bootmenu/binary/2nd-init /sbin
-#chmod 6755 /sbin/2nd-init
 chown 0.0 /sbin/adbd.root
 chmod 4755 /sbin/adbd.root
 

@@ -9,13 +9,6 @@ export PATH=/sbin:/system/xbin:/system/bin
 ######## Main Script
 
 mount -o remount,rw /
-#rm -f /init.mapphone_cdma.rc
-#rm -f /init.rc
-#rm -f /ueventd.rc
-
-
-#/sbin/bootmenu hijack_2ndinit
-#exit 0
 
 cp -r -f /system/bootmenu/2nd-init/* /
 chmod 755 /*.rc
@@ -23,7 +16,6 @@ chmod 755 /*.rc
 cp /system/bootmenu/binary/2nd-init /sbin/2nd-init
 chmod 755 /sbin/2nd-init
 chown 0:2000 /sbin/2nd-init
-#chown 0:2000 /init
 rm -f /sbin/ueventd
 ln -s /init /sbin/ueventd
 
@@ -74,18 +66,12 @@ done
 rm /sbin/busybox
 
 ## used for adbd shell (can be bash also)
-#/system/xbin/ln -s /system/xbin/busybox /sbin/sh
+/system/xbin/ln -s /system/xbin/busybox /sbin/sh
 
 ## reduce lcd backlight to save battery
 #echo 18 > /sys/class/leds/lcd-backlight/brightness
 
 
 ######## Let's go
-#echo ===================
-#echo ===================
-#echo `ls -l /sbin | grep init`
-
 /sbin/2nd-init
-#/sbin/bootmenu busybox sh /sbin/2nd-init
-#/system/bootmenu/binary/2nd-init
 
