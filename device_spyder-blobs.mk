@@ -75,6 +75,7 @@ PRODUCT_COPY_FILES += \
     device/motorola/spyder/prebuilt/bin/e2fsck:system/bin/e2fsck \
     device/motorola/spyder/prebuilt/bin/mke2fs:system/bin/mke2fs \
     device/motorola/spyder/prebuilt/bin/resize2fs:system/bin/resize2fs \
+    device/motorola/spyder/prebuilt/bin/finalize_release:system/bin/finalize_release \
     device/motorola/spyder/prebuilt/bin/tune2fs:system/bin/tune2fs \
     device/motorola/spyder/prebuilt/etc/TICameraCameraProperties.xml:system/etc/TICameraCameraProperties.xml \
     device/motorola/spyder/prebuilt/etc/gps.conf:system/etc/gps.conf \

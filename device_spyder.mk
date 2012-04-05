@@ -93,8 +93,8 @@ PRODUCT_PACKAGES += \
 #    FmService 
 
 # Release utilities
-PRODUCT_PACKAGES += \
-	 spyder_releaseutils-finalize_release 
+#PRODUCT_PACKAGES += \
+#	 spyder_releaseutils-finalize_release 
 	#spyder_releaseutils-mke2fs\
 	#spyder_releaseutils-tune2fs
 #    spyder_releaseutils-check_kernel \
