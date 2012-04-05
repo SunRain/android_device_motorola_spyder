@@ -67,6 +67,7 @@ PRODUCT_COPY_FILES += \
 
 # Prebuilts
 PRODUCT_COPY_FILES += \
+	device/motorola/spyder/prebuilt/bin/usbd:system/bin/usbd \
     device/motorola/spyder/prebuilt/bin/battd:system/bin/battd \
     device/motorola/spyder/prebuilt/bin/mount_ext3.sh:system/bin/mount_ext3.sh \
     device/motorola/spyder/prebuilt/bin/strace:system/bin/strace \
