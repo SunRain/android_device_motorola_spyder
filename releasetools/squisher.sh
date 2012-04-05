@@ -20,4 +20,4 @@ cp -f $ANDROID_BUILD_TOP/device/motorola/spyder/updater-script $REPACK/ota/META-
 #  cat $ANDROID_BUILD_TOP/device/motorola/spyder/updater-script-rel >> $REPACK/ota/META-INF/com/google/android/updater-script
 #fi
 
-cp -f $ANDROID_BUILD_TOP/out/target/product/spyder/root/init $REPACK/ota/system/bootmenu/2nd-init/init
+#cp -f $ANDROID_BUILD_TOP/out/target/product/spyder/root/init $REPACK/ota/system/bootmenu/2nd-init/init

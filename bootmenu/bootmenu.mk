@@ -25,7 +25,9 @@ PRODUCT_COPY_FILES += \
 	${bm_device}/bootmenu/profiles/cm/init.mapphone_cdma.rc:system/bootmenu/2nd-init/init.mapphone_cdma.rc \
 	${bm_device}/bootmenu/profiles/cm/init.mapphone_umts.rc:system/bootmenu/2nd-init/init.mapphone_umts.rc \
 	${bm_device}/bootmenu/profiles/cm/ueventd.rc:system/bootmenu/2nd-init/ueventd.rc	\
-#	${bm_device}/bootmenu/profiles/cm/init:system/bootmenu/2nd-init/init 
+	${bm_device}/bootmenu/profiles/cm/init:system/bootmenu/2nd-init/init \
+	${bm_device}/bootmenu/profiles/cm/default.prop:system/bootmenu/2nd-init/default.prop \
+	${bm_device}/bootmenu/profiles/cm/usbcheck.sh:system/bootmenu/2nd-init/usbcheck.sh 
 #	${bm_device}/profiles/standard/init.mapphone_umts.rc:system/bootmenu/2nd-init/init.mapphone_umts.rc \
 #	${bm_device}/profiles/standard/ueventd.rc:system/bootmenu/2nd-init/ueventd.rc \
 #	${bm_device}/profiles/backup/init.rc:system/bootmenu/2nd-boot/init.rc \
