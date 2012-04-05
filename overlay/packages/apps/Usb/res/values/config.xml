@@ -21,6 +21,6 @@
     <bool name="show_connection_notification">false</bool>
 
     <!-- This file is used by netd to read usb tethering state -->
-	<string name="current_usb_state_file_name" translatable="false">/tmp/usbd_current_state</string>
+	<string name="current_usb_state_file_name" translatable="false">/data/usbd/current_state</string>
 </resources>
 

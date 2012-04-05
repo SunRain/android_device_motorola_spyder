@@ -11,6 +11,8 @@ persist.ril.modem.ttydevice=/dev/ttySPI0
 persist.ril.tcmd.ttydevice=/dev/usb/tty2-1:1.3
 persist.ril.diag.ttydevice=/dev/usb/tty2-1:1.0
 
+ril.wrigley.modem.tty=/dev/usb/tty1-2:1.10
+
 # directory assistance number
 ro.mot.ril.danlist=611,*611,#611
 #persist.ril.ecclist=911,*911,#911
@@ -47,6 +49,7 @@ persist.ril.event.report=0
 
 ro.sf.lcd_density=240
 
+# set default usb mode as usb mass storage
 ro.default_usb_mode=2
 
 # This defines the max event window manager can
@@ -283,8 +286,6 @@ ro.com.google.clientidbase.yt=android-motorola
 ro.com.google.clientidbase.ms=android-motorola
 ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html
 ro.url.legal.android_privacy=http://www.google.com/intl/%s/mobile/android/basic/privacy.html
-# set default usb mode as usb mass storage
-ro.default_usb_mode=2
 ro.media.enc.aud.fileformat=3gp
 ro.media.enc.aud.codec=amrnb
 ro.media.enc.aud.bps=13300

@@ -6,13 +6,11 @@ on init
     export DOWNLOAD_CACHE /cache/download
     export SD_EXT_DIRECTORY /sd-ext
     export EXTERNAL_STORAGE /mnt/sdcard
-    export SECONDARY_STORAGE /mnt/external1
+    export SECONDARY_STORAGE /mnt/sdcard-ext
 
-on init
-    mkdir /mnt/external1 0000 system system
+    #mkdir /mnt/external1 0000 system system
 
-
-    export EXTERNAL_ALT_STORAGE /mnt/sdcard-ext # Feature 34534
+    #export EXTERNAL_ALT_STORAGE /mnt/sdcard-ext # Feature 34534
     mkdir /mnt/sdcard-ext 0000 system system # Feature 34534
     symlink /mnt/sdcard-ext /sdcard-ext # Feature 34534
 
@@ -27,7 +25,7 @@ on init
     mkdir /osh 0755 root root
 # Mount Points for External Storage Devices
     mkdir /mnt/usbdisk_1.1.1 0755 system system
-    mkdir /mnt/usbdisk_1.0 0755 system system
+    #mkdir /mnt/usbdisk_1.0 0755 system system
     mkdir /mnt/usbdisk_1.1 0755 system system
     mkdir /mnt/usbdisk_1.2 0755 system system
     mkdir /mnt/usbdisk_1.3 0755 system system
@@ -1091,6 +1089,7 @@ on property:dev.bootcomplete=1
 #    public static final int USB_MODE_NONE = 5;
 
 on property:sys.usb.config=adb
+log "== init.spyder.usb.rc: on property:sys.usb.config=adb -----------------------"
     exec /system/bin/am broadcast \
         -a com.motorola.intent.action.USB_MODE_SWITCH_FROM_UI \
         --ei USB_MODE_INDEX 5
@@ -1098,6 +1097,7 @@ on property:sys.usb.config=adb
     setprop sys.usb.state $sys.usb.config
 
 on property:sys.usb.config=mass_storage,adb
+log "== init.spyder.usb.rc: on property:sys.usb.config=mass_storage,adb -----------------------"
     exec /system/bin/am broadcast \
         -a com.motorola.intent.action.USB_MODE_SWITCH_FROM_UI \
         --ei USB_MODE_INDEX 2
@@ -1105,18 +1105,21 @@ on property:sys.usb.config=mass_storage,adb
     setprop sys.usb.state $sys.usb.config
 
 on property:sys.usb.config=mass_storage
+ log "== init.spyder.usb.rc: on property:sys.usb.config=mass_storage -----------------------"
     exec /system/bin/am broadcast \
         -a com.motorola.intent.action.USB_MODE_SWITCH_FROM_UI \
         --ei USB_MODE_INDEX 2
     setprop sys.usb.state $sys.usb.config
 
 on property:sys.usb.config=rndis
+log "== init.spyder.usb.rc: on property:sys.usb.config=rndis -----------------------"
     exec /system/bin/am broadcast \
         -a com.motorola.intent.action.USB_MODE_SWITCH_FROM_UI \
         --ei USB_MODE_INDEX 3
     setprop sys.usb.state $sys.usb.config
 
 on property:sys.usb.config=rndis,adb
+log "== init.spyder.usb.rc: on property:sys.usb.config=rndis,adb -----------------------"
     exec /system/bin/am broadcast \
         -a com.motorola.intent.action.USB_MODE_SWITCH_FROM_UI \
         --ei USB_MODE_INDEX 3
@@ -1124,12 +1127,14 @@ on property:sys.usb.config=rndis,adb
     setprop sys.usb.state $sys.usb.config
 
 on property:sys.usb.config=mtp
+    log "== init.spyder.usb.rc: on property:sys.usb.config=mtp -----------------------"
     exec /system/bin/am broadcast \
         -a com.motorola.intent.action.USB_MODE_SWITCH_FROM_UI \
         --ei USB_MODE_INDEX 1
     setprop sys.usb.state $sys.usb.config
 
 on property:sys.usb.config=mtp,adb
+    log "== init.spyder.usb.rc: on property:sys.usb.config=mtp,adb -----------------------"
     exec /system/bin/am broadcast \
         -a com.motorola.intent.action.USB_MODE_SWITCH_FROM_UI \
         --ei USB_MODE_INDEX 1

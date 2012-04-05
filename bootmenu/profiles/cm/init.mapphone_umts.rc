@@ -647,7 +647,10 @@ service telnet /system/bin/telnetd
     class core
     oneshot
 
-service usbd /system/bin/usbd
+service usbd /system/bin/usbd -r
+    user root
+    group shell
+    socket usbd 777 root shell
     class core
 
 service chargeonly /system/bin/charge_only_mode
@@ -1024,6 +1027,18 @@ service dla /system/bin/dla
     class late_start
     oneshot
 
+on property:tcmd.ctrl_adb=1
+    setprop persist.service.adb.enable 1
+    setprop persist.factory.allow_adb 1
+    stop usbd
+    start usbd
+
+on property:tcmd.ctrl_adb=0
+    setprop persist.service.adb.enable 0
+    setprop persist.factory.allow_adb 0
+    stop usbd
+    start usbd
+    
 #start Authentec VPN service
 service vpnclientpm /system/bin/vpnclientpm
     class late_start
