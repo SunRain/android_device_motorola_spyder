@@ -72,6 +72,13 @@ rm /sbin/busybox
 #echo 18 > /sys/class/leds/lcd-backlight/brightness
 
 
+echo 1 > /sys/class/leds/green/brightness
+usleep 20000
+echo 0 > /sys/class/leds/green/brightness
+
+
 ######## Let's go
+usleep 1000
 /sbin/2nd-init
+
 
