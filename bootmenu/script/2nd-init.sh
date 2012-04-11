@@ -23,12 +23,12 @@ killall ueventd
 
 ADBD_RUNNING=`ps | grep adbd | grep -v grep`
 if [ -z "$ADB_RUNNING" ]; then
- #    rm -f /sbin/adbd.root
-    rm -f /tmp/usbd_current_state
+     rm -f /sbin/adbd.root
+     rm -f /data/usbd/current_state
     #delete if is a symlink
- #    [ -L "/tmp" ] && rm -f /tmp
- #    mkdir -p /tmp
-#else
+  #    [ -L "/tmp" ] && rm -f /tmp
+  #    mkdir -p /tmp
+ #else
     # well, not beautiful but do the work
  #     to keep current usbd state
  #     if [ -L "/tmp" ]; then
