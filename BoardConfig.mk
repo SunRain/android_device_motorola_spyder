@@ -99,6 +99,7 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 
 # Bootbmenu
 BOARD_USES_BOOTMENU := true
+BOARD_WITH_CPCAP := true
 #BUILD_BOOTMENU_STANDALONE :=1
 BOARD_CUSTOM_BOOTMENU_GRAPHICS := ../../../device/motorola/spyder/bootmenu/bm_graphics.c
 BOARD_BOOTMENU_NO_OVERCLOCK :=true
