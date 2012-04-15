@@ -15,8 +15,8 @@ obj-$(CONFIG_CPU_FREQ_GOV_MOT_HOTPLUG)	+= cpufreq_mot_hotplug.o
 # CPUfreq cross-arch helpers
 obj-$(CONFIG_CPU_FREQ_TABLE)		+= freq_table.o
 
-obj-m  += ../symsearch/
+obj-m  += symsearch/
 
-obj-m += cpufreq_interactive.o cpufreq_smartass.o
+obj-m += overclock.o cpufreq_interactive.o cpufreq_smartass.o 
 
 

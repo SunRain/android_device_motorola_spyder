@@ -1,5 +1,5 @@
 
-source "../symsearch/Kconfig"
+source "drivers/cpufreq/symsearch/Kconfig"
 
 
 config CPU_FREQ
@@ -270,4 +270,9 @@ config CPUFREQ_GOV_INTERACTIVE
 config CPUFREQ_GOV_SMARTASS
       bool "smartass"
       default m
+      
+ config OVERCLOCK
+      bool "overclock"
+      default m
+          
 endif	# CPU_FREQ

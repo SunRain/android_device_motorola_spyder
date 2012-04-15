@@ -27,7 +27,7 @@
 
 #include <asm/cputime.h>
 
-#include "../symsearch/symsearch.h"
+#include "symsearch/symsearch.h"
 
 SYMSEARCH_DECLARE_FUNCTION_STATIC(unsigned long, _nr_running, void);
 
