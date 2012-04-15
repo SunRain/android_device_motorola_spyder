@@ -132,6 +132,9 @@ PRODUCT_PACKAGES += \
 #    charger_res_images
 
 
+PRODUCT_PACKAGES := \
+      FileExplorer
+      
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
