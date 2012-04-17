@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "AudioPolicyJordan"
+#define LOG_TAG "AudioPolicySpyder"
 #define LOG_NDEBUG 0
 #include <utils/Log.h>
 
@@ -43,6 +43,7 @@ extern "C" void destroyAudioPolicyManager(AudioPolicyInterface *interface)
     delete interface;
 }
 
+/*
 AudioPolicyManagerBase::routing_strategy AudioPolicyManager::getStrategy(
         AudioSystem::stream_type stream) {
     // stream to strategy mapping
@@ -86,6 +87,6 @@ AudioPolicyManagerBase::routing_strategy AudioPolicyManager::getStrategy(
         return STRATEGY_MEDIA;
     }
 }
-
+*/
 
 }; // namespace android_audio_legacy

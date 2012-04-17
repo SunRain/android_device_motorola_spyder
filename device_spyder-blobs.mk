@@ -7,21 +7,21 @@ PRODUCT_COPY_FILES += \
     device/motorola/spyder/audio/libaudio.so:obj/lib/libaudio.so \
     device/motorola/spyder/audio/libaudio_ext.so:obj/lib/libaudio_ext.so \
     device/motorola/spyder/audio/libaudiopolicy.so:obj/lib/libaudiopolicy.so \
-	device/motorola/spyder/audio/libaudiopolicy_ext.so:obj/lib/libaudiopolicy_ext.so 
+    device/motorola/spyder/audio/libaudiopolicy_ext.so:obj/lib/libaudiopolicy_ext.so 
 
 
 # Audio
 PRODUCT_COPY_FILES += \
     device/motorola/spyder/audio/acoustics.default.so:system/lib/hw/acoustics.spyder.so \
-	device/motorola/spyder/audio/alsa.default.so:system/lib/hw/alsa.default.so \
+    device/motorola/spyder/audio/alsa.default.so:system/lib/hw/alsa.default.so \
     device/motorola/spyder/audio/alsa.omap4.so:system/lib/hw/alsa.spyder.so \
     device/motorola/spyder/audio/liba2dp.so:system/lib/liba2dp.so \
     device/motorola/spyder/audio/libasound.so:system/lib/libasound.so \
     device/motorola/spyder/audio/libaudio.so:system/lib/libaudio.so \
     device/motorola/spyder/audio/libaudio_ext.so:system/lib/libaudio_ext.so \
     device/motorola/spyder/audio/libaudiopolicy.so:system/lib/libaudiopolicy.so \
-	device/motorola/spyder/audio/libaudiopolicy_ext.so:system/lib/libaudiopolicy_ext.so \
- 
+    device/motorola/spyder/audio/libaudiopolicy_ext.so:system/lib/libaudiopolicy_ext.so \
+
 
 # Hardware HALs
 PRODUCT_COPY_FILES += \
@@ -67,7 +67,7 @@ PRODUCT_COPY_FILES += \
 
 # Prebuilts
 PRODUCT_COPY_FILES += \
-	device/motorola/spyder/prebuilt/bin/usbd:system/bin/usbd \
+    device/motorola/spyder/prebuilt/bin/usbd:system/bin/usbd \
     device/motorola/spyder/prebuilt/bin/battd:system/bin/battd \
     device/motorola/spyder/prebuilt/bin/mount_ext3.sh:system/bin/mount_ext3.sh \
     device/motorola/spyder/prebuilt/bin/strace:system/bin/strace \

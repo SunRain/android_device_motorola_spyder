@@ -42,16 +42,18 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     camera.omap4
-	#camera.spyder
+    #camera.spyder
 
 
 # Sound  + # BlueZ a2dp Audio HAL module
 PRODUCT_PACKAGES += \
-	hcitool hciattach hcidump hciconfig \
-	libaudioutils audio.a2dp.default audio_policy.spyder  \
+	hcitool hciconfig \
+	audio.a2dp.default audio_policy.spyder  \
 	libaudiohw_legacy audio.primary.spyder 
- #libaudiohw_legacy \
-#libaudiopolicy_legacy2 \
+	#libaudioutils	
+	#hciattach hcidump
+	#libaudiohw_legacy \
+	#libaudiopolicy_legacy2 \
 
 # Modem
 PRODUCT_PACKAGES += \
@@ -65,16 +67,19 @@ PRODUCT_PACKAGES += \
 
 # Wifi packages
 PRODUCT_PACKAGES += iwmulticall hostap wlan_loader wlan_cu wpa_supplicant
-PRODUCT_PACKAGES += libhostapdcli libCustomWifi libwpa_client libtiOsLib
-PRODUCT_PACKAGES += tiwlan.ini dhcpcd.conf wpa_supplicant.conf hostapd.conf
-PRODUCT_PACKAGES += tiap_loader tiap_cu ndc
+PRODUCT_PACKAGES += libCustomWifi 
+# libhostapdcli libwpa_client  libtiOsLib  
+PRODUCT_PACKAGES += dhcpcd.conf wpa_supplicant.conf hostapd.conf
+#tiwlan.ini
+PRODUCT_PACKAGES += tiap_loader tiap_cu
+#ndc
 
 
 # OMX stuff
-PRODUCT_PACKAGES += dspexec libbridge libLCML libOMX_Core
-PRODUCT_PACKAGES += libOMX.TI.AAC.encode libOMX.TI.AAC.decode libOMX.TI.AMR.decode
-PRODUCT_PACKAGES += libOMX.TI.WBAMR.encode libOMX.TI.MP3.decode libOMX.TI.WBAMR.decode
-PRODUCT_PACKAGES += libOMX.TI.WMA.decode libOMX.TI.Video.Decoder libOMX.TI.Video.encoder
+#PRODUCT_PACKAGES +=  libbridge libLCML libOMX_Core
+#PRODUCT_PACKAGES += libOMX.TI.AAC.encode libOMX.TI.AAC.decode libOMX.TI.AMR.decode
+#PRODUCT_PACKAGES += libOMX.TI.WBAMR.encode libOMX.TI.MP3.decode libOMX.TI.WBAMR.decode
+#PRODUCT_PACKAGES += libOMX.TI.WMA.decode libOMX.TI.Video.Decoder libOMX.TI.Video.encoder
 #PRODUCT_PACKAGES += libOMX.TI.VPP
 #PRODUCT_PACKAGES += libskiahw libOMX.TI.JPEG.Encoder libOMX.TI.JPEG.decoder    
 
@@ -132,7 +137,7 @@ PRODUCT_PACKAGES += \
 #    charger_res_images
 
 
-PRODUCT_PACKAGES := \
+PRODUCT_PACKAGES += \
       FileExplorer
       
 # we have enough storage space to hold precise GC data
