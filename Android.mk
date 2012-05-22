@@ -1,3 +1,3 @@
-ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),spyder)
+ifeq ($(TARGET_DEVICE),spyder)
     include $(all-subdir-makefiles)
 endif
