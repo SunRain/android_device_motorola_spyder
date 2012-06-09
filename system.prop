@@ -31,7 +31,8 @@ persist.radio.imsfwloglevel=3
 
 # Default network type.
 # 7 => GLOBAL.
-ro.telephony.default_network=10
+# 3 => NETWORK_MODE_GSM_UMTS ,auto mode
+ro.telephony.default_network=3
 ro.com.google.clientid=android-motorola
 ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html
 ro.url.legal.android_privacy=http://www.google.com/intl/%s/mobile/android/basic/privacy.html
@@ -230,9 +231,9 @@ persist.ril.rssi.enable.param6=1
 ril.wrigley.modem.tty=/dev/usb/tty1-2:1.10
 persist.radio.lte.mm.disable=0
 rild.libpath=/system/lib/moto-ril-multimode.so
-persist.sys.usb.config=mass_storage
+persist.sys.usb.config=mass_storage,adb
 gsm.sim.mot.simswap=1
-ro.com.google.gmsversion=4.0_r1
+ro.com.google.gmsversion=4.0_r2
 ro.crypto.state=unencrypted
 ro.media.enc.aud.fileformat=qcp
 ro.media.enc.aud.codec=qcelp
@@ -279,6 +280,7 @@ ril.rat=LTE
 lte_ril.netcfg_to=90
 ro.telephony.call_ring.multiple=false
 ro.cdma.homesystem=64,65,76,77,78,79,80,81,82,83
+ro.com.android.dataroaming=true
 ro.cdma.data_retry_config=max_retries=infinite,0,0,10000,10000,100000,10000,10000,10000,10000,140000,540000,960000
 ro.gsm.data_retry_config=default_randomization=2000,max_retries=infinite,0,0,80000,125000,485000,905000
 ro.gsm.2nd_data_retry_config=max_retries=infinite,default_randomization=2000,0,0,80000,125000,485000,905000
@@ -292,3 +294,5 @@ ro.build.version.full=ICS_Version.4.0.4_r1.2.XT912.Verizon.en.US
 ro.mot.hidden_keyboards=evfwd
 persist.sys.usb.config=mass_storage,adb
 
+com.ti.omap_enhancement=true
+hwui.render_dirty_regions=false

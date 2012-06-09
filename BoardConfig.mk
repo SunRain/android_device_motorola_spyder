@@ -70,6 +70,16 @@ BOARD_USE_MOTO_DOCK_HACK := true
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 
+# Bootmenu
+BOARD_USES_BOOTMENU := true
+BOARD_WITH_CPCAP := true
+TARGET_CPU_SMP := true
+#BUILD_BOOTMENU_STANDALONE :=1
+#BOARD_CUSTOM_BOOTMENU_GRAPHICS := ../../../device/motorola/spyder/bootmenu/bm_graphics.c
+BOARD_BOOTMENU_NO_OVERCLOCK :=true
+BOARD_BOOTMODE_CONFIG_FILE := /cache/recovery/bootmode.conf
+TARGET_NEEDS_MOTOROLA_HIJACK :=true
+
 
 # Recovery
 BUILD_BOOTMENU_STANDALONE := true
@@ -108,7 +118,13 @@ OMAP_ENHANCEMENT := true
 ifdef OMAP_ENHANCEMENT
 COMMON_GLOBAL_CFLAGS += -DOMAP_ENHANCEMENT -DTARGET_OMAP4
 endif
+#COMMON_GLOBAL_CFLAGS += -DTARGET_OMAP4
 
+ENHANCED_DOMX := true
+USE_ITTIAM_AAC := true
+ifdef USE_ITTIAM_AAC
+COMMON_GLOBAL_CFLAGS += -DUSE_ITTIAM_AAC
+endif
 
 # MOTOROLA
 USE_MOTOROLA_CODE := true
@@ -125,9 +141,10 @@ endif
 # Off currently
 
 # OTA Packaging
-TARGET_PROVIDES_RELEASETOOLS := true
-TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/motorola/spyder/releasetools/spyder_ota_from_target_files
-TARGET_RELEASETOOL_IMG_FROM_TARGET_SCRIPT := device/motorola/spyder/releasetools/spyder_img_from_target_files
+#TARGET_PROVIDES_RELEASETOOLS := true
+#TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/motorola/spyder/releasetools/spyder_ota_from_target_files
+#TARGET_RELEASETOOL_IMG_FROM_TARGET_SCRIPT := device/motorola/spyder/releasetools/spyder_img_from_target_files
+#TARGET_CUSTOM_RELEASETOOL := ./device/motorola/spyder/releasetools/squisher
 TARGET_CUSTOM_RELEASETOOL := ./device/motorola/spyder/releasetools/squisher
 
 # Hijack
@@ -142,3 +159,4 @@ BOARD_NEEDS_CUTILS_LOG := true
 BOARD_USES_SECURE_SERVICES := true
 BOARD_HAS_MAPPHONE_SWITCH := true
 USE_IPV6_ROUTE := true
+BOARD_HAS_LOCKED_BOOTLOADER := true

@@ -4,6 +4,9 @@
 # cyanogen
 #
 
+echo "spyder SQUISHER:"
+echo "================"
+
 OUT_TARGET_HOST=`uname -a | grep Darwin`
 if [ -z "$OUT_TARGET_HOST" ]
 then
@@ -24,18 +27,18 @@ if [ -z "$OUT" -o ! -d "$OUT" ]; then
 fi
 
 if [ "$TARGET_BUILD_TYPE" = "debug" ]; then
-    OTAPACKAGE=$OUT/${TARGET_PRODUCT}_debug-ota-$TARGET_BUILD_VARIANT.$USER.zip
+    OTAPACKAGE=$OUT/${TARGET_PRODUCT}_debug-ota-$TARGET_BUILD_VARIANT.$LOGNAME.zip
 elif [ "$TARGET_BUILD_VARIANT" = "userdebug" ]; then
     OTAPACKAGE=$OUT/$TARGET_PRODUCT-ota-eng.$USER.zip
 else
-    OTAPACKAGE=$OUT/$TARGET_PRODUCT-ota-$TARGET_BUILD_VARIANT.$USER.zip
+    OTAPACKAGE=$OUT/$TARGET_PRODUCT-ota-$TARGET_BUILD_VARIANT.$LOGNAME.zip
 fi
 if [ ! -f "$OTAPACKAGE" ]; then
-	echo "$OTAPACKAGE doesn't exist!";
+	echo "$OTAPACKAGE doesn't exist!"
 	exit 1
 fi
 
-OPTICHARGER=$ANDROID_BUILD_TOP/device/motorola/spyder/releasetools/opticharger
+OPTICHARGER=$ANDROID_BUILD_TOP/vendor/cm/tools/opticharger
 QUIET=-q
 DELETE_BINS="applypatch applypatch_static check_prereq recovery updater"
 
@@ -89,15 +92,6 @@ cd $REPACK/ota/system/app
 find ./ -name \*.apk | $XARGS $OPTICHARGER
 )
 
-# Remove unwanted Apps
-rm $REPACK/ota/system/app/FmRxApp.apk
-rm $REPACK/ota/system/app/FmService.apk
-rm $REPACK/ota/system/app/FmTxApp.apk
-
-# Fix Libraries
-mv $REPACK/ota/system/vendor/lib/hw/hwcomposer.omap4.so $REPACK/ota/system/vendor/lib/hw/hwcomposer.omap4.so.old
-mv $REPACK/ota/system/lib/hw/hwcomposer.default.so $REPACK/ota/system/vendor/lib/hw/hwcomposer.omap4.so
-
 
 if [ "$WANT_SQUASHFS" -eq 1 ]; then
 	squash_opts="-force-uid 1000 -force-gid 1000 -no-progress -noappend -no-exports -no-recovery"
@@ -134,6 +128,10 @@ $SED -i \
 	-e '/ro\.build\.type/s/eng/user/' \
 	$REPACK/ota/system/build.prop
 
+# Include device specific script
+if [ -f $ANDROID_BUILD_TOP/device/motorola/spyder/releasetools/squisher.sh ]; then
+	. $ANDROID_BUILD_TOP/device/motorola/spyder/releasetools/squisher.sh
+fi
 
 # Delete unnecessary binaries
 ( cd $REPACK/ota/system/bin; echo $DELETE_BINS | xargs rm -f; )
@@ -145,22 +143,24 @@ $SED -i \
 rm -rf $REPACK/ota/recovery
 
 # Strip modules
-[ -d $REPACK/ota/system/lib/modules ] && \
-	find $REPACK/ota/system/lib/modules -name "*.ko" -print0 | xargs -0 arm-eabi-strip --strip-unneeded
-
-# Copy libvoicesearch as it's getting messed up in the build
-cp -f $ANDROID_BUILD_TOP/device/motorola/spyder/prebuilt/lib/libvoicesearch.so $REPACK/ota/system/lib/libvoicesearch.so
+find $REPACK/ota/system/lib/modules -name "*.ko" -print0 | xargs -0 arm-eabi-strip --strip-unneeded
 
 # Determine what to name the new signed package
-REALDATE=`date +%m-%d`
-
+BUILD_DATE=`date "+%Y%m%d-%H%M"`
 if [ -z "$CYANOGEN_NIGHTLY" ]; then
-	MODVERSION=`sed -n -e'/ro\.cm\.version/s/^.*=//p' $REPACK/ota/system/build.prop`
+	MODVERSION=`sed -n -e'/ro\.modversion/s/^.*CyanogenMod-//p' $REPACK/ota/system/build.prop`
 	: ${MODVERSION:=nightly}
-    OUTFILE=$OUT/RAZR-6_14_84-CM9-$REALDATE-UNOFFICIAL.zip
-	echo MODVERSION: $MODVERSION
+	OUTFILE=$OUT/MagicMod-$MODVERSION-$BUILD_DATE-signed.zip
 else
-	OUTFILE=$OUT/update-squished.zip
+	OUTFILE=$OUT/MagicMod-$BUILD_DATE-squished.zip
+#	if [ "$TARGET_PRODUCT" = "cyanogen_spyder" ]; then
+#		MODVERSION=`sed -n -e'/ro\.modversion/s/^.*CyanogenMod-//p' $REPACK/ota/system/build.prop`
+#		OUTFILE=$OUT/cm$MODVERSION.zip
+#		if [ -n "$CYANOGEN_NIGHTLY_BOOT" ]; then
+#			MODVERSION=`echo $MODVERSION | sed -r 's/NIGHTLY/BOOT'$CYANOGEN_NIGHTLY_BOOT'/'`
+#			OUTFILE=$OUT/cm$MODVERSION.zip
+#		fi
+#	fi
 fi
 
 # Pack it up and sign
@@ -169,7 +169,7 @@ printf "Zipping package..."
 echo
 printf "Signing package..."
 SECURITYDIR=$ANDROID_BUILD_TOP/build/target/product/security
-java -Xmx1536m \
+java -Xmx1024m \
 	-jar $ANDROID_BUILD_TOP/out/host/$OUT_TARGET_HOST/framework/signapk.jar \
 	-w $SECURITYDIR/testkey.x509.pem $SECURITYDIR/testkey.pk8 \
 	$REPACK/update.zip $OUTFILE
@@ -186,6 +186,10 @@ $MD5 $img >$img.md5sum
 echo
 echo "Package complete: $OUTFILE"
 cat $img.md5sum
+echo
+# Build date and current time:
+cat $OUT/system/build.prop | grep ro.build.date=
+date "+%Y%m%d-%H%M"
 echo
 )
 
