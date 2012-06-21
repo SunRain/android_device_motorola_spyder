@@ -56,7 +56,7 @@ umount -l /pds
 
 ######## Cleanup
 
-rm -f /sbin/lsof
+#rm -f /sbin/lsof
 
 ## busybox cleanup..
 for cmd in $(/sbin/busybox --list); do
