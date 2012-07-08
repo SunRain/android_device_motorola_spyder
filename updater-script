@@ -22,6 +22,10 @@ delete_recursive("/system");
 ui_print("Starting Installation...");
 package_extract_dir("system", "/system");
 ui_print("Setting symlinks and permissions...");
+symlink("./libbltsville_gc2d.2.1.0.0.so", "/system/vendor/lib/libbltsville_gc2d.so");
+symlink("./libbltsville_gc2d.so", "/system/vendor/lib/libbltsville_hw2d.so");
+symlink("./libbltsville_ticpu.2.0.0.10.so", "/system/vendor/lib/libbltsville_ticpu.so");
+symlink("./libbltsville_ticpu.so", "/system/vendor/lib/libbltsville_cpu.so");
 symlink("Roboto-Bold.ttf", "/system/fonts/DroidSans-Bold.ttf");
 symlink("Roboto-Regular.ttf", "/system/fonts/DroidSans.ttf");
 symlink("busybox", "/system/xbin/[", "/system/xbin/[[",
@@ -131,6 +135,7 @@ set_perm_recursive(0, 2000, 0775, 0664, "/system/bootmenu/config/");
 set_perm_recursive(0, 2000, 0755, 0755, "/system/bin");
 set_perm(0, 3003, 02750, "/system/bin/netcfg");
 set_perm(0, 3004, 02755, "/system/bin/ping");
+set_perm(0, 1001, 04770, "/system/bin/pppd-ril");
 set_perm(0, 2000, 06750, "/system/bin/run-as");
 set_perm_recursive(1002, 1002, 0755, 0440, "/system/etc/bluetooth");
 set_perm(0, 0, 0755, "/system/etc/bluetooth");

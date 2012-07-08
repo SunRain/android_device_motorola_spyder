@@ -27,7 +27,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     libaudioutils \
-    libaudiohw_legacy \
+    libaudiohw_legacy 
 
 # BlueZ test tools
 PRODUCT_PACKAGES += \
@@ -81,10 +81,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Camera \
     camera_test \
-    OmapCamera \
+    OMAPCamera \
     Superuser \
     su \
-    DockAudio \
+    DockAudio 
 
 
 PRODUCT_PACKAGES += \
@@ -92,7 +92,7 @@ PRODUCT_PACKAGES += \
     com.android.future.usb.accessory \
     FileManager \
     MusicFX \
-    Apollo \
+    Apollo 
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise

@@ -50,7 +50,7 @@ on init
 
 # Permissions for RIL. Need to be set before boot.
 
-    #chown radio radio /sys/class/radio/w3g_lte/command
+    chown radio radio /sys/class/radio/w3g_lte/command
 
 
     chmod 0660 /sys/bus/usb/devices/usb1/power/control
@@ -477,6 +477,16 @@ on boot
    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed
+   
+   chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+   chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies
+   chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors
+   chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq
+   chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/scaling_driver
+   chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+   chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+   chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed
+   
    chown system system /sys/class/hwmon/hwmon1/device/temp1_max
    chown system system /sys/class/hwmon/hwmon1/device/temp1_max_hyst
    chown system system /sys/class/hwmon/hwmon1/device/update_rate
@@ -524,7 +534,7 @@ on boot
     chown root audio /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
     chown root audio /proc/irq/124/smp_affinity
     chown root audio /proc/irq/125/smp_affinity
-    chmod 660 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chmod 777 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
     chmod 660 /proc/irq/124/smp_affinity
     chmod 660 /proc/irq/125/smp_affinity
 on charger
@@ -567,13 +577,13 @@ on property:tcmd.suspend=1
     stop surfaceflinger
     stop media
     stop zygote
-    #write /sys/devices/virtual/radio/w3g_lte/command suspend
+    write /sys/devices/virtual/radio/w3g_lte/command suspend
 # Normal to suspend
 on property:tcmd.suspend=2
     stop surfaceflinger
     stop media
     stop zygote
-    #write /sys/devices/virtual/radio/w3g_lte/command suspend
+    write /sys/devices/virtual/radio/w3g_lte/command suspend
 # suspend to start services
 on property:tcmd.suspend=3
     start surfaceflinger
@@ -959,15 +969,15 @@ service RescueStarter /system/bin/RescueStarter
     user graphics
     group input graphics
     class main
-#service gadget-lte-modem /system/bin/tty2ttyd ril.wrigley.modem.tty /dev/ttyGS1 0 512
-#    user radio
-#    group radio
-#    disabled
-#service wrigley-diag /system/bin/wrigley-diag.sh
-#    user log
-#    group net_admin
-#    oneshot
-#    disabled
+service gadget-lte-modem /system/bin/tty2ttyd ril.wrigley.modem.tty /dev/ttyGS1 0 512
+    user radio
+    group radio
+    disabled
+service wrigley-diag /system/bin/wrigley-diag.sh
+    user log
+    group net_admin
+    oneshot
+    disabled
 service logcatd-blan /system/bin/logcatd-blan
     user root
     # Immediately drops root, keeps CAP_SYS_ADMIN, and runs as below
@@ -993,7 +1003,7 @@ on property:ro.bootmode=bp-tools
     start gadget-qbp-modem
     start gadget-qbp-diag
     write /proc/sys/net/ipv4/ip_forward 1
-    #start wrigley-diag
+    start wrigley-diag
     start logcatd-blan
 service JuniperVPNTools /system/bin/JuniperVPNTools
     class main
@@ -1019,7 +1029,7 @@ on property:sys.usb.config=mass_storage
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 22b8
     write /sys/class/android_usb/android0/idProduct 4365
-    write /sys/module/g_android/parameters/cdrom 1
+    write /sys/module/g_android/parameters/cdrom 0
     write /sys/module/g_android/parameters/cdrom_switch 0
     write /sys/class/android_usb/android0/functions "mass_storage"
     write /sys/class/android_usb/android0/enable 1
@@ -1029,7 +1039,7 @@ on property:sys.usb.config=mass_storage,adb
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 22b8
     write /sys/class/android_usb/android0/idProduct 4366
-    write /sys/module/g_android/parameters/cdrom 1
+    write /sys/module/g_android/parameters/cdrom 0
     write /sys/module/g_android/parameters/cdrom_switch 0
     write /sys/class/android_usb/android0/functions "mass_storage,adb"
     write /sys/class/android_usb/android0/enable 1
