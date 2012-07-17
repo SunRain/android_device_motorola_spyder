@@ -1,11 +1,18 @@
-# Sandbox Setup: ON  ** IF YOU ARE USING THIS AND DON'T KNOW WHAT THAT MEANS: BEWARE **
+# Camera
+USE_CAMERA_STUB := false
+BOARD_USES_TI_CAMERA_HAL := true
+TI_CAMERAHAL_DEBUG_ENABLED := true
 
+# ICS Leak Hacks
+BOARD_OVERRIDE_FB0_WIDTH := 540
+BOARD_OVERRIDE_FB0_HEIGHT := 960
 
 # inherit from the proprietary version
-#-include vendor/motorola/spyder/BoardConfigVendor.mk
+-include vendor/motorola/spyder/BoardConfigVendor.mk
 
 
 # Processor
+TARGET_NO_BOOTLOADER := true
 TARGET_BOARD_PLATFORM := omap4
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
@@ -18,77 +25,47 @@ ARCH_ARM_HAVE_TLS_REGISTER := true
 NEEDS_ARM_ERRATA_754319_754320 := true
 TARGET_GLOBAL_CFLAGS += -DNEEDS_ARM_ERRATA_754319_754320
 
+#BOARD_PROVIDES_LIBRIL := true
 
-
-# for gingerbread compatibility
-# for commit http://review.cyanogenmod.com/#change,13317
-#BOARD_USE_GINGERBREAD_BINDER := true
-COMMON_GLOBAL_CFLAGS += -DBINDER_COMPAT
-###
 
 # Kernel
 TARGET_PREBUILT_KERNEL := device/motorola/spyder/kernel
-BOARD_KERNEL_CMDLINE := console=/dev/null rw mem=1023M@0x80000000 vram=20M omapgpu.vram=0:4M,1:16M,2:16MT init=/init ip=off mmcparts=mmcblk1:p7(pds),p8(utags),p14(boot),p15(recovery),p16(cdrom),p17(misc),p18(cid),p19(kpanic),p20(system),p21(cache),p22(preinstall),p23(webtop),p24(userdata),p25(emstorage) mot_sst=1
+BOARD_KERNEL_CMDLINE := omap_wdt.timer_margin=60 oops=panic console=/dev/null rw mem=1023M@0x80000000 vram=11140K omapfb.vram=0:8256K,1:4K,2:2880K init=/init ip=off mmcparts=mmcblk1:p7(pds),p8(utags),p14(boot),p15(recovery),p16(cdrom),p17(misc),p18(cid),p19(kpanic),p20(system),p21(cache),p22(preinstall),p23(webtop),p24(userdata),p25(emstorage) mot_sst=1 androidboot.bootloader=0x0A
 BOARD_KERNEL_BASE := 0x80000000
 BOARD_PAGE_SIZE := 0x4096
-# I used a very small img size for system & userdata img to save my HDD space
-BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 9437184
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 0x19000000
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 0x105c0000
-BOARD_FLASH_BLOCK_SIZE := 131072
-TARGET_PREBUILT_KERNEL := device/motorola/spyder/kernel
 
 
 # Storage / Sharing
-BOARD_VOLD_MAX_PARTITIONS := 30
+BOARD_VOLD_MAX_PARTITIONS := 100
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
-#BOARD_USE_USB_MASS_STORAGE_SWITCH := true
-TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/usb_mass_storage/lun%d/file"
-BOARD_CUSTOM_USB_CONTROLLER := ../../device/motorola/spyder/UsbController.cpp
-
+TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/android0/f_mass_storage/lun%d/file"
+#BOARD_CUSTOM_USB_CONTROLLER := ../../device/moto/spyder/UsbController.cpp
+BOARD_MTP_DEVICE := "/dev/mtp_usb"
 
 # Connectivity - Wi-Fi
-BOARD_WPA_SUPPLICANT_DRIVER := CUSTOM
-BOARD_HOSTAPD_DRIVER        := CUSTOM
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := libCustomWifi
-WPA_SUPPLICANT_VERSION      := VER_0_6_X
-HOSTAPD_VERSION             := VER_0_6_X
-BOARD_SOFTAP_DEVICE         := wl1283
-BOARD_WLAN_DEVICE           := wl1283
-#BOARD_WLAN_TI_STA_DK_ROOT   := system/wlan/ti/wilink_6_1
-WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/tiwlan_drv.ko"
-WIFI_DRIVER_MODULE_NAME     := "tiwlan_drv"
-WIFI_DRIVER_MODULE_ARG      := ""
-WIFI_FIRMWARE_LOADER        := "wlan_loader"
-WIFI_DRIVER_FW_STA_PATH     := "/system/etc/wifi/fw_wlan1283.bin"
-WIFI_DRIVER_FW_AP_PATH      := "/system/etc/wifi/fw_wlan1283_AP.bin"
-PRODUCT_WIRELESS_TOOLS      := true
-AP_CONFIG_DRIVER_WILINK     := true
-WPA_SUPPL_APPROX_USE_RSSI   := true
-
-# Camera
-USE_CAMERA_STUB := false
-BOARD_USES_TI_CAMERA_HAL := true
-BOARD_USE_LEGACY_TOUCHSCREEN := true
-# need update
-#BOARD_USES_CAMERASHIM := true
-#BOARD_CAMERA_LIBRARIES := libcamera
-#BOARD_CAMERA_MOTOROLA_COMPAT := true
+BOARD_WPA_SUPPLICANT_DRIVER      := NL80211
+WPA_SUPPLICANT_VERSION           := VER_0_8_X
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wl12xx
+BOARD_HOSTAPD_DRIVER             := NL80211
+PRODUCT_WIRELESS_TOOLS           := true
+BOARD_HOSTAPD_PRIVATE_LIB        := lib_driver_cmd_wl12xx
+BOARD_WLAN_DEVICE                := wl12xx_mac80211
+BOARD_SOFTAP_DEVICE              := wl12xx_mac80211
+WIFI_DRIVER_MODULE_PATH          := "/system/lib/modules/wl12xx_sdio.ko"
+WIFI_DRIVER_MODULE_NAME          := "wl12xx_sdio"
+WIFI_FIRMWARE_LOADER             := ""
+COMMON_GLOBAL_CFLAGS += -DUSES_TI_MAC80211
 
 # Audio
 BOARD_USES_GENERIC_AUDIO := false
 BOARD_USES_ALSA_AUDIO := true
 BUILD_WITH_ALSA_UTILS := true
 HAVE_2_3_DSP := 1
+#BOARD_USES_AUDIO_LEGACY := true
+#ifdef BOARD_USES_AUDIO_LEGACY
+#    COMMON_GLOBAL_CFLAGS += -DBOARD_USES_AUDIO_LEGACY
+#endif
 TARGET_PROVIDES_LIBAUDIO := true
-BOARD_USES_AUDIO_LEGACY := true
-BOARD_USE_KINETO_COMPATIBILITY := true
-ifdef BOARD_USES_AUDIO_LEGACY
-    COMMON_GLOBAL_CFLAGS += -DBOARD_USES_AUDIO_LEGACY
-endif
-# for test
-AUDIO_POLICY_TEST := true 
 BOARD_USE_MOTO_DOCK_HACK := true
 
 
@@ -96,25 +73,25 @@ BOARD_USE_MOTO_DOCK_HACK := true
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 
-
-# Bootbmenu
+# Bootmenu
 BOARD_USES_BOOTMENU := true
 BOARD_WITH_CPCAP := true
 TARGET_CPU_SMP := true
 #BUILD_BOOTMENU_STANDALONE :=1
-BOARD_CUSTOM_BOOTMENU_GRAPHICS := ../../../device/motorola/spyder/bootmenu/bm_graphics.c
+#BOARD_CUSTOM_BOOTMENU_GRAPHICS := ../../../device/motorola/spyder/bootmenu/bm_graphics.c
 BOARD_BOOTMENU_NO_OVERCLOCK :=true
 BOARD_BOOTMODE_CONFIG_FILE := /cache/recovery/bootmode.conf
 TARGET_NEEDS_MOTOROLA_HIJACK :=true
 
 
 # Recovery
-#BUILD_BOOTMENU_STANDALONE := true
+BUILD_BOOTMENU_STANDALONE := true
 BOARD_HAS_LOCKED_BOOTLOADER := true
-#TARGET_PREBUILT_RECOVERY_KERNEL := device/motorola/spyder/recovery-kernel
-BOARD_CUSTOM_GRAPHICS := ../../../device/motorola/spyder/bootmenu/recovery/graphics.c
+TARGET_PREBUILT_RECOVERY_KERNEL := device/motorola/spyder/recovery-kernel
+#BOARD_CUSTOM_GRAPHICS := ../../../device/motorola/spyder/recovery/graphics.c
 #BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/motorola/spyder/recovery/recovery_ui.c
-BOARD_HAS_NO_SELECT_BUTTON := false
+BOARD_HAS_NO_SELECT_BUTTON := true
+BOARD_UMS_LUNFILE := "/sys/class/android_usb/android0/f_mass_storage/lun%d/file"
 BOARD_ALWAYS_INSECURE := true
 BOARD_HAS_LARGE_FILESYSTEM := true
 BOARD_MKE2FS := device/motorola/spyder/releaseutils/mke2fs
@@ -124,35 +101,20 @@ BOARD_HAS_SDCARD_INTERNAL := true
 BOARD_HAS_WEBTOP := true
 TARGET_RECOVERY_PRE_COMMAND := "echo 1 > /data/.recovery_mode; sync;"
 TARGET_RECOVERY_PRE_COMMAND_CLEAR_REASON := true
+TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
 
 
 # Sandbox Filesystem Settings
-#BOARD_SYSTEM_DEVICE := /dev/block/system
-#BOARD_SYSTEM_FILESYSTEM_OPTIONS := noatime,nodiratime
-#BOARD_SYSTEM_FILESYSTEM := ext3
+BOARD_SYSTEM_DEVICE := /dev/block/system
+BOARD_SYSTEM_FILESYSTEM_OPTIONS := noatime,nodiratime
+BOARD_SYSTEM_FILESYSTEM := ext3
 
 
 # Graphics
 BOARD_EGL_CFG := device/motorola/spyder/prebuilt/etc/egl.cfg
-COMMON_GLOBAL_CFLAGS += -DMISSING_EGL_EXTERNAL_IMAGE -DMISSING_EGL_PIXEL_FORMAT_YV12 -DMISSING_GRALLOC_BUFFERS -DSURFACEFLINGER_FORCE_SCREEN_RELEASE
-
-
-# OMX
-HARDWARE_OMX := true
-ifdef HARDWARE_OMX
-OMX_VENDOR := ti
-OMX_VENDOR_WRAPPER := TI_OMX_Wrapper
-BOARD_OPENCORE_LIBRARIES := libOMX_Core
-BOARD_OPENCORE_FLAGS := -DHARDWARE_OMX=1
-endif
-LEGACY_DOMX := true
-# For test
-#OMAP4_DEBUG_MEMLEAK := true
-#TARGET_USE_OMX_RECOVERY := true
-#TARGET_USE_OMAP_COMPAT  := true
-#BUILD_WITH_TI_AUDIO := 1
-#BUILD_PV_VIDEO_ENCODERS := 1
-
+USE_OPENGL_RENDERER := true
+#COMMON_GLOBAL_CFLAGS += -DMISSING_EGL_EXTERNAL_IMAGE -DMISSING_EGL_PIXEL_FORMAT_YV12 -DMISSING_GRALLOC_BUFFERS
+COMMON_GLOBAL_CFLAGS += -DSURFACEFLINGER_FORCE_SCREEN_RELEASE
 
 # OMAP
 OMAP_ENHANCEMENT := true
@@ -160,15 +122,20 @@ ifdef OMAP_ENHANCEMENT
 COMMON_GLOBAL_CFLAGS += -DOMAP_ENHANCEMENT -DTARGET_OMAP4
 endif
 
+ENHANCED_DOMX := true
+USE_ITTIAM_AAC := true
+ifdef USE_ITTIAM_AAC
+COMMON_GLOBAL_CFLAGS += -DUSE_ITTIAM_AAC
+endif
 
 # MOTOROLA
 USE_MOTOROLA_CODE := true
 ifdef USE_MOTOROLA_CODE
-COMMON_GLOBAL_CFLAGS += -DUSE_MOTOROLA_CODE -DMOTOROLA_UIDS
+COMMON_GLOBAL_CFLAGS += -DUSE_MOTOROLA_CODE
 endif
 USE_MOTOROLA_USERS := true
 ifdef USE_MOTOROLA_USERS
-COMMON_GLOBAL_CFLAGS += -DUSE_MOTOROLA_USERS -DMOTOROLA_UIDS
+COMMON_GLOBAL_CFLAGS += -DUSE_MOTOROLA_USERS
 endif
 
 
@@ -179,13 +146,24 @@ endif
 #TARGET_PROVIDES_RELEASETOOLS := true
 #TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/motorola/spyder/releasetools/spyder_ota_from_target_files
 #TARGET_RELEASETOOL_IMG_FROM_TARGET_SCRIPT := device/motorola/spyder/releasetools/spyder_img_from_target_files
-# Override cyanogen squisher to customize our update zip package
+#TARGET_CUSTOM_RELEASETOOL := ./device/motorola/spyder/releasetools/squisher
 TARGET_CUSTOM_RELEASETOOL := ./device/motorola/spyder/releasetools/squisher
-
 
 # Hijack
 #TARGET_NEEDS_MOTOROLA_HIJACK := true
 #BOARD_HIJACK_LOG_ENABLE := true
+
+# CodeAurora Optimizations: msm8960: Improve performance of memmove, bcopy, and memmove_words
+# added by twa_priv
+TARGET_USE_KRAIT_BIONIC_OPTIMIZATION := true
+TARGET_USE_KRAIT_PLD_SET := true
+TARGET_KRAIT_BIONIC_PLDOFFS := 10
+TARGET_KRAIT_BIONIC_PLDTHRESH := 10
+TARGET_KRAIT_BIONIC_BBTHRESH := 64
+TARGET_KRAIT_BIONIC_PLDSIZE := 64
+
+# Bootanimation
+TARGET_BOOTANIMATION_PRELOAD := true
 
 
 # Misc.
@@ -194,8 +172,5 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 BOARD_NEEDS_CUTILS_LOG := true
 BOARD_USES_SECURE_SERVICES := true
 BOARD_HAS_MAPPHONE_SWITCH := true
-
-TARGET_NO_BOOTLOADER := true
-TARGET_NO_PREINSTALL := false
-TARGET_NO_RADIOIMAGE := false
+USE_IPV6_ROUTE := true
 BOARD_HAS_LOCKED_BOOTLOADER := true

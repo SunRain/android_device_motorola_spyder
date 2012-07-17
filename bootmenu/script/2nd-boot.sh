@@ -5,6 +5,12 @@
 
 export PATH=/sbin:/system/xbin:/system/bin
 
+for cmd in $(/sbin/busybox --list); do
+  [ -L "/sbin/$cmd" ] && rm "/sbin/$cmd"
+done
+
+rm /sbin/busybox
+
 exit 0
 
 source /system/bootmenu/script/_config.sh

@@ -47,20 +47,24 @@ for cmd in $($BB --list); do
 done
 
 # add lsof to debug locks
-cp -f /system/bootmenu/binary/lsof /sbin/lsof
+#cp -f /system/bootmenu/binary/lsof /sbin/lsof
 
 $BB chmod +rx /sbin/*
 
 # custom adbd (allow always root)
 cp -f /system/bootmenu/binary/adbd /sbin/adbd.root
+cp -f /system/bootmenu/binary/adbd /sbin/adbd
 cp /system/bin/bootmenu /sbin/bootmenu
 chown 0.0 /sbin/adbd.root
-chmod 4755 /sbin/adbd.root
+chown 0.0 /sbin/adbd
+chmod 6755 /sbin/adbd.root
+
 
 chmod 666 /dev/graphics/fb0
 
 ## missing system files
 [ ! -c /dev/tty0 ]  && ln -s /dev/tty /dev/tty0
+
 
 ## /default.prop replace.. (TODO: check if that works)
 cp -f /system/bootmenu/config/default.prop /default.prop

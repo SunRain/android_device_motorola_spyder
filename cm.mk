@@ -7,6 +7,8 @@ $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 # Inherit some common CM stuff.
 #$(call inherit-product, vendor/cm/config/gsm.mk)
 
+DEVICE_PACKAGE_OVERLAYS += device/motorola/spyder/overlay/cm
+
 #
 # Setup device specific product configuration.
 #
@@ -17,13 +19,14 @@ PRODUCT_DEVICE_PREFIX := umts
 PRODUCT_MODEL := XT910
 PRODUCT_MANUFACTURER := Motorola
 PRODUCT_SFX := Razr
-ANDROID_VERSION := 4.0.4_r1
-MOTOROLA_BUILD_ID := 6.5.1-167_SPU-15-M2
-#MOTOROLA_BUILD_ID := IML74K
-MOTOROLA_SOFTWARE_VERSION := 6.5.1-167_SPU-15-M2
+ANDROID_VERSION := 4.1.1_r1
+#MOTOROLA_BUILD_ID := 6.7.1-68_DHD-15_M4-16
+MOTOROLA_BUILD_ID := JRO03C
+MOTOROLA_SOFTWARE_VERSION := 6.14.84
 DEVELOPER_NAME := Wanggjghost
-DEVELOPER_HOST := SunRain-BuildBox
+DEVELOPER_HOST := rombot.droidhive.com
 DEVELOPMENT_STAGE := Beta
+TARGET_BOOTANIMATION_NAME := vertical-540x960
 
 # Release name and versioning
 PRODUCT_RELEASE_NAME := XT910_RTGB

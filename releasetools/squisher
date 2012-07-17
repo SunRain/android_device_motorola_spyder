@@ -146,12 +146,13 @@ rm -rf $REPACK/ota/recovery
 find $REPACK/ota/system/lib/modules -name "*.ko" -print0 | xargs -0 arm-eabi-strip --strip-unneeded
 
 # Determine what to name the new signed package
+BUILD_DATE=`date "+%Y%m%d-%H%M"`
 if [ -z "$CYANOGEN_NIGHTLY" ]; then
 	MODVERSION=`sed -n -e'/ro\.modversion/s/^.*CyanogenMod-//p' $REPACK/ota/system/build.prop`
 	: ${MODVERSION:=nightly}
-	OUTFILE=$OUT/update-cm-$MODVERSION-signed.zip
+	OUTFILE=$OUT/MagicMod-$MODVERSION-$BUILD_DATE-signed.zip
 else
-	OUTFILE=$OUT/update-squished.zip
+	OUTFILE=$OUT/MagicMod-$BUILD_DATE-squished.zip
 #	if [ "$TARGET_PRODUCT" = "cyanogen_spyder" ]; then
 #		MODVERSION=`sed -n -e'/ro\.modversion/s/^.*CyanogenMod-//p' $REPACK/ota/system/build.prop`
 #		OUTFILE=$OUT/cm$MODVERSION.zip
