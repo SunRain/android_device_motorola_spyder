@@ -352,7 +352,7 @@ def main(argv):
   if OPTIONS.extra_script is not None:
     OPTIONS.extra_script = open(OPTIONS.extra_script).read()
 
-  print "unzipping target target-files..."
+    print "unzipping target target-files..spyder boot ota from targe files"
   OPTIONS.input_tmp = common.UnzipTemp(args[0])
 
   OPTIONS.target_tmp = OPTIONS.input_tmp

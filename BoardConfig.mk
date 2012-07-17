@@ -1,6 +1,7 @@
 # Camera
 USE_CAMERA_STUB := false
 BOARD_USES_TI_CAMERA_HAL := true
+TI_CAMERAHAL_DEBUG_ENABLED := true
 
 # ICS Leak Hacks
 BOARD_OVERRIDE_FB0_WIDTH := 540
@@ -151,6 +152,18 @@ TARGET_CUSTOM_RELEASETOOL := ./device/motorola/spyder/releasetools/squisher
 # Hijack
 #TARGET_NEEDS_MOTOROLA_HIJACK := true
 #BOARD_HIJACK_LOG_ENABLE := true
+
+# CodeAurora Optimizations: msm8960: Improve performance of memmove, bcopy, and memmove_words
+# added by twa_priv
+TARGET_USE_KRAIT_BIONIC_OPTIMIZATION := true
+TARGET_USE_KRAIT_PLD_SET := true
+TARGET_KRAIT_BIONIC_PLDOFFS := 10
+TARGET_KRAIT_BIONIC_PLDTHRESH := 10
+TARGET_KRAIT_BIONIC_BBTHRESH := 64
+TARGET_KRAIT_BIONIC_PLDSIZE := 64
+
+# Bootanimation
+TARGET_BOOTANIMATION_PRELOAD := true
 
 
 # Misc.
