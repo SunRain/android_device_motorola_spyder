@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-/*
+/* //device/apps/common/assets/res/any/colors.xml
+**
 ** Copyright 2006, The Android Open Source Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,10 +17,11 @@
 ** limitations under the License.
 */
 -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
+    <!-- Defines the shutdown options shown in the reboot dialog. -->
+    <array name="shutdown_reboot_options" translatable="false">
+        <item>@string/reboot_reboot</item>
+    </array>
 
-<!-- If you edit this version, also edit the version in the partner-supplied
-    apns-conf.xml configuration file -->
-<apns version="7">
-
-</apns>
+</resources>

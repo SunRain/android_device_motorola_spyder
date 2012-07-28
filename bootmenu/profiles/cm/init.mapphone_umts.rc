@@ -49,7 +49,7 @@ on init
 
 # Permissions for RIL. Need to be set before boot.
 
-    chown radio radio /sys/class/radio/w3g_lte/command
+    #chown radio radio /sys/class/radio/w3g_lte/command
 
 
     chmod 0660 /sys/bus/usb/devices/usb1/power/control
@@ -223,7 +223,7 @@ on post-fs-data
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
 # MTU for USB tethering
-    write /sys/class/net/gether0/mtu 1428
+ #   write /sys/class/net/gether0/mtu 1428
 on early-boot
 # Adjust the out of memory thresholds to account for the larget
 # space on sholes. These numbers are in pages (4k). Must be kept
@@ -568,13 +568,13 @@ on property:tcmd.suspend=1
     stop surfaceflinger
     stop media
     stop zygote
-    write /sys/devices/virtual/radio/w3g_lte/command suspend
+  #  write /sys/devices/virtual/radio/w3g_lte/command suspend
 # Normal to suspend
 on property:tcmd.suspend=2
     stop surfaceflinger
     stop media
     stop zygote
-    write /sys/devices/virtual/radio/w3g_lte/command suspend
+  #  write /sys/devices/virtual/radio/w3g_lte/command suspend
 # suspend to start services
 on property:tcmd.suspend=3
     start surfaceflinger
@@ -985,21 +985,21 @@ service RescueStarter /system/bin/RescueStarter
     user graphics
     group input graphics
     class main
-service gadget-lte-modem /system/bin/tty2ttyd ril.wrigley.modem.tty /dev/ttyGS1 0 512
-    user radio
-    group radio
-    disabled
-service wrigley-diag /system/bin/wrigley-diag.sh
-    user log
-    group net_admin
-    oneshot
-    disabled
-service logcatd-blan /system/bin/logcatd-blan
-    user root
-    # Immediately drops root, keeps CAP_SYS_ADMIN, and runs as below
-    # user system
+#service gadget-lte-modem /system/bin/tty2ttyd ril.wrigley.modem.tty /dev/ttyGS1 0 512
+#    user radio
+#    group radio
+#    disabled
+#service wrigley-diag /system/bin/wrigley-diag.sh
+#    user log
+#    group net_admin
+#    oneshot
+#    disabled
+#service logcatd-blan /system/bin/logcatd-blan
+#    user root
+#    # Immediately drops root, keeps CAP_SYS_ADMIN, and runs as below
+#    # user system
     # group system log inet
-    disabled
+ #   disabled
 # auEmail provisioning daemon
 service aepls001 /system/bin/aepls001
     class main
@@ -1008,9 +1008,9 @@ service aepls001 /system/bin/aepls001
     group nobody
 on property:ro.bootmode=bp-tools
     start tcmd
-    write /proc/sys/net/ipv4/ip_forward 1
-    start wrigley-diag
-    start logcatd-blan
+#    write /proc/sys/net/ipv4/ip_forward 1
+ #   start wrigley-diag
+ #   start logcatd-blan
 service JuniperVPNTools /system/bin/JuniperVPNTools
     class main
     user vpn

@@ -19,31 +19,43 @@ PRODUCT_PACKAGES := \
     charger \
     charger_res_images
 
-
 PRODUCT_PACKAGES += \
     camera.omap4 \
     libinvensense_mpl \
     hwcomposer.omap4 \
     hwcomposer.default \
+    parse_hdmi_edid \
+    libedid 
 
 PRODUCT_PACKAGES += \
     libaudioutils \
-    libaudiohw_legacy 
+    libaudiohw_legacy \
+    audio.primary.spyder \
+    audio_policy.default \
+    audio_policy.spyder
 
+# BlueZ a2dp Audio HAL module
+PRODUCT_PACKAGES += \
+    audio.a2dp.default
+    
 # BlueZ test tools
 PRODUCT_PACKAGES += \
     hciconfig \
     hcitool
 
+    # Tiler
+PRODUCT_PACKAGES += \
+    libtimemmgr
+    
 # Modem
 PRODUCT_PACKAGES += \
-    nc \
     Stk \
     libaudiomodemgeneric \
-    libreference-cdma-sms \
     rild \
     radiooptions \
     sh 
+    #nc 
+    #libreference-cdma-sms \
 
 # Wifi
 #    wlan_loader \
@@ -56,6 +68,7 @@ PRODUCT_PACKAGES += \
     wifical.sh \
     wpa_supplicant.conf \
     TQS_D_1.7.ini \
+    TQS_D_1.7_127x.ini \
     crda \
     regulatory.bin \
     calibrator \
@@ -152,7 +165,7 @@ $(call inherit-product, device/motorola/spyder/device_spyder-blobs.mk)
 $(call inherit-product, device/motorola/spyder/bootmenu/bootmenu.mk)
 
 #$(call inherit-product-if-exists, vendor/verizon/spyder-leak-verizon-vendor.mk)
-$(call inherit-product-if exists, device/ti/proprietary-open/wl12xx/wlan/wl12xx-wlan-fw-products.mk)
+#$(call inherit-product-if exists, device/ti/proprietary-open/wl12xx/wlan/wl12xx-wlan-fw-products.mk)
 $(call inherit-product-if-exists, vendor/motorola/spyder/spyder-vendor.mk)
 
 $(call inherit-product-if-exists, vendor/google/gapps.mk)

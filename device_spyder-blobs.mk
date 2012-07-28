@@ -2,10 +2,10 @@
 PRODUCT_COPY_FILES += \
     device/motorola/spyder/audio/alsa.omap4.so:/system/lib/hw/alsa.omap4.so \
     device/motorola/spyder/audio/audio.a2dp.default.so:/system/lib/hw/audio.a2dp.default.so \
-    device/motorola/spyder/audio/audio.primary.omap4.so:/system/lib/hw/audio.primary.omap4.so \
-    device/motorola/spyder/audio/audio_policy.omap4.so:/system/lib/hw/audio_policy.omap4.so \
     device/motorola/spyder/audio/libasound.so:/system/lib/libasound.so \
     device/motorola/spyder/audio/libaudio_ext.so:/system/lib/libaudio_ext.so
+    #device/motorola/spyder/audio/audio.primary.omap4.so:/system/lib/hw/audio.primary.omap4.so \
+    #device/motorola/spyder/audio/audio_policy.omap4.so:/system/lib/hw/audio_policy.omap4.so \
     
     # Permissions files
 PRODUCT_COPY_FILES += \
@@ -17,7 +17,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.sensor.compass.xml:/system/etc/permissions/android.hardware.sensor.compass.xml \
     frameworks/native/data/etc/android.hardware.sensor.light.xml:/system/etc/permissions/android.hardware.sensor.light.xml \
     frameworks/native/data/etc/android.hardware.sensor.proximity.xml:/system/etc/permissions/android.hardware.sensor.proximity.xml \
-    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:/system/etc/permissions/android.hardware.telephony.cdma.xml \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:/system/etc/permissions/android.hardware.telephony.gsm.xml \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:/system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.xml:/system/etc/permissions/android.hardware.touchscreen.multitouch.xml \
@@ -26,7 +25,8 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:/system/etc/permissions/handheld_core_hardware.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml 
-    
+
+    #frameworks/native/data/etc/android.hardware.telephony.cdma.xml:/system/etc/permissions/android.hardware.telephony.cdma.xml \
     # Prebuilts
 PRODUCT_COPY_FILES += \
     device/motorola/spyder/prebuilt/bin/battd:system/bin/battd \
@@ -62,6 +62,7 @@ PRODUCT_COPY_FILES += \
     device/motorola/spyder/prebuilt/etc/vold.fstab:system/etc/vold.fstab \
     device/motorola/spyder/prebuilt/etc/TICameraCameraProperties.xml:system/etc/TICameraCameraProperties.xml \
     device/motorola/spyder/prebuilt/etc/media_codecs.xml:system/etc/media_codecs.xml \
+    device/motorola/spyder/prebuilt/etc/audio_policy.conf:system/etc/audio_policy.conf 
 
 
 # Phone settings
@@ -70,11 +71,22 @@ PRODUCT_COPY_FILES += \
     vendor/cm/prebuilt/common/etc/spn-conf.xml:system/etc/spn-conf.xml \
 
     
-    PRODUCT_COPY_FILES += \
+PRODUCT_COPY_FILES += \
     device/motorola/spyder/prebuilt/lib/libwtnativetask.so:system/lib/libwtnativetask.so \
-     device/motorola/spyder/prebuilt/lib/camera.omap4.so:system/lib/hw/camera.omap4.so \
+    device/motorola/spyder/prebuilt/lib/camera.omap4.so:system/lib/hw/camera.omap4.so \
     
 
+PRODUCT_COPY_FILES += \
+    device/motorola/spyder/prebuilt/etc/firmware/ti-connectivity/wl127x-fw-4-mr.bin:/system/etc/firmware/ti-connectivity/wl127x-fw-4-mr.bin.bin \
+    device/motorola/spyder/prebuilt/etc/firmware/ti-connectivity/wl127x-fw-4-plt.bin:/system/etc/firmware/ti-connectivity/wl127x-fw-4-plt.bin \
+    device/motorola/spyder/prebuilt/etc/firmware/ti-connectivity/wl127x-fw-4-sr.bin:/system/etc/firmware/ti-connectivity/wl127x-fw-4-sr.bin \
+    device/motorola/spyder/prebuilt/etc/firmware/ti-connectivity/wl128x-fw-4-mr.bin:/system/etc/firmware/ti-connectivity/wl128x-fw-4-mr.bin \
+    device/motorola/spyder/prebuilt/etc/firmware/ti-connectivity/wl128x-fw-4-plt.bin:/system/etc/firmware/ti-connectivity/wl128x-fw-4-plt.bin \
+    device/motorola/spyder/prebuilt/etc/firmware/ti-connectivity/wl128x-fw-4-sr.bin:/system/etc/firmware/ti-connectivity/wl128x-fw-4-sr.bin \
+    device/motorola/spyder/prebuilt/etc/firmware/ti-connectivity/wl1271-nvs.bin:/system/etc/firmware/ti-connectivity/wl1271-nvs.bin \
+    device/motorola/spyder/prebuilt/etc/firmware/ti-connectivity/wl1271-nvs_127x.bin:/system/etc/firmware/ti-connectivity/wl1271-nvs_127x.bin \
+    
+    
 # Backup Tool
 PRODUCT_COPY_FILES += \
     device/motorola/spyder/prebuilt/bin/backuptool.sh:system/bin/backuptool.sh \

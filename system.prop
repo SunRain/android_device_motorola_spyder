@@ -29,7 +29,8 @@ ro.config.vc_call_vol_steps=7
 
 # wlan interface
 wifi.interface = wlan0
-softap.interface = wlan1
+softap.interface = wlan0
+wifi.ap.interface = wlan0
 
 # Time between scans in seconds. Keep it high to minimize battery drain.
 # This only affects the case in which there are remembered access points,
@@ -233,7 +234,7 @@ persist.dbg.kwdt.report=0
 ro.hdcp.support = 2
 
 # Fast dormancy support
-ro.mot.ds.fastdormancy.disable=true
+ro.mot.ds.fastdormancy.disable=false
 
 #turn off Event Report
 persist.ril.event.report=0
@@ -264,6 +265,7 @@ ro.mot.nat_roaming_enable=1
 #
 dalvik.vm.heapstartsize=5m
 dalvik.vm.heapgrowthlimit=42m
+dalvik.vm.heapsize=128m
 drm.service.enabled=true
 persist.ril.modem.ttydevice=/dev/usb/tty2-1:1.4
 persist.ril.tcmd.ttydevice=/dev/usb/tty2-1:1.3
@@ -318,6 +320,9 @@ ro.mot.hidden_keyboards=evfwd
 ro.mot.build.version.sdk_int=6
 
 ro.com.google.locationfeatures=1
+ro.setupwizard.enable_bypass=1
 
 com.ti.omap_enhancement=true
 hwui.render_dirty_regions=false
+ril.subscription.types=NV,RUIM
+ro.ril.moto.newarch=true

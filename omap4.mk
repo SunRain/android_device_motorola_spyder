@@ -32,7 +32,6 @@ PRODUCT_PACKAGES := \
 	libomxcameraadapter \
 	hwcomposer.omap4 \
 	smc_pa_ctrl \
-	tf_daemon
-	
-		#camera.omap4 \
+	tf_daemon \
+	camera.omap4 
 
