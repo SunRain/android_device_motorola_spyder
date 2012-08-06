@@ -65,6 +65,7 @@ on fs
     mount ext3 /dev/block/mmcblk1p20 /system wait noatime nodiratime barrier=1
     mount ext3 /dev/block/mmcblk1p24 /data nosuid nodev noatime nodiratime
     mount ext3 /dev/block/mmcblk1p21 /cache nosuid nodev noatime nodiratime
+    mount ext3 /dev/block/mmcblk1p22 /preinstall nosuid nodev noatime nodiratime
 
     mount ext3 /dev/block/mmcblk1p20 /system ro noatime nodiratime remount
     mount rootfs rootfs / rw remount
@@ -223,7 +224,7 @@ on post-fs-data
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
 # MTU for USB tethering
- #   write /sys/class/net/gether0/mtu 1428
+    write /sys/class/net/gether0/mtu 1428
 on early-boot
 # Adjust the out of memory thresholds to account for the larget
 # space on sholes. These numbers are in pages (4k). Must be kept
@@ -1008,9 +1009,9 @@ service aepls001 /system/bin/aepls001
     group nobody
 on property:ro.bootmode=bp-tools
     start tcmd
-#    write /proc/sys/net/ipv4/ip_forward 1
- #   start wrigley-diag
- #   start logcatd-blan
+    write /proc/sys/net/ipv4/ip_forward 1
+    start wrigley-diag
+    start logcatd-blan
 service JuniperVPNTools /system/bin/JuniperVPNTools
     class main
     user vpn

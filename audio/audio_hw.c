@@ -857,6 +857,7 @@ static void set_eq_filter(struct omap4_audio_device *adev)
 
 static void set_incall_device(struct omap4_audio_device *adev)
 {
+   LOGFUNC("%s(%p)", __FUNCTION__, adev);
 	return;
 }
 
@@ -886,7 +887,11 @@ static void set_input_volumes(struct omap4_audio_device *adev, int main_mic_on,
                 volume = DB_TO_ABE_GAIN(main_mic_on ? CAPTURE_DIGITAL_MIC_VOLUME :
                     (headset_mic_on ? CAPTURE_HEADSET_MIC_VOLUME :
                      (sub_mic_on ? CAPTURE_SUB_MIC_VOLUME : 0)));
-            }
+	  }else if(adev->board_type == UMTS_SPYDER) {
+	    volume = DB_TO_ABE_GAIN(main_mic_on ? CAPTURE_MAIN_MIC_VOLUME :
+	    (headset_mic_on ? CAPTURE_HEADSET_MIC_VOLUME :
+	    (sub_mic_on ? CAPTURE_SUB_MIC_VOLUME : 0)));
+	  }
             break;
 
         case AUDIO_SOURCE_CAMCORDER:
@@ -921,7 +926,12 @@ static void set_input_volumes(struct omap4_audio_device *adev, int main_mic_on,
                 mixer_ctl_set_value(adev->mixer_ctls.amic_ul_volume, channel, volume);
             else
                 mixer_ctl_set_value(adev->mixer_ctls.dmic1_ul_volume, channel, volume);
-        }
+	}else if(adev->board_type == UMTS_SPYDER) {    
+	    if (headset_mic_on)	
+		mixer_ctl_set_value(adev->mixer_ctls.amic_ul_volume, channel, volume);     
+	    else	
+		mixer_ctl_set_value(adev->mixer_ctls.dmic1_ul_volume, channel, volume);
+      }
     }
 }
 

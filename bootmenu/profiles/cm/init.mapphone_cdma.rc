@@ -70,12 +70,13 @@ on fs
     mount ext3 /dev/block/mmcblk1p7 /pds nosuid nodev noatime nodiratime
     mount ext3 /dev/block/mmcblk1p24 /data nosuid nodev noatime nodiratime
     mount ext3 /dev/block/mmcblk1p21 /cache nosuid nodev noatime nodiratime
+    mount ext3 /dev/block/mmcblk1p22 /preinstall nosuid nodev noatime nodiratime
 
 on post-fs
     chown system system /pds
     chmod 0775 /pds
-#    chmod 0771 /preinstall
-#    chown system system /preinstall
+    chmod 0771 /preinstall
+    chown system system /preinstall
 
     mount ext3 /dev/block/mmcblk1p20 /system ro noatime nodiratime remount
     mount rootfs rootfs / rw remount
@@ -687,9 +688,9 @@ service uim /system/bin/uim-sysfs
     class core
     user root
     group bluetooth net_bt_admin
-service hostapd /system/bin/logwrapper /system/bin/hostapd -dd /data/misc/wifi/hostapd.conf
+service hostapd /system/bin/hostapd -d /data/misc/wifi/hostapd.conf
     class main
-    socket wpa_wlan1 dgram 660 wifi wifi
+    socket wpa_wlan0 dgram 660 wifi wifi
     disabled
     oneshot
 service initial_regdom /system/bin/initial_regdom.sh
@@ -708,6 +709,11 @@ service p2p_supplicant /system/bin/wpa_supplicant \
     socket wpa_wlan0 dgram 660 wifi wifi
     disabled
     oneshot
+#service p2p_supplicant /system/bin/wpa_supplicant -Dnl80211 -iwlan0 -c/data/misc/wifi/p2p_supplicant.conf -dt
+#    class main
+#    socket wpa_p2p_wlan0 dgram 660 wifi wifi
+#    disabled
+#    oneshot
 service hciattach /system/bin/hciattach -l
     class main
     user bluetooth
@@ -894,12 +900,12 @@ service qbplogd /system/bin/qbplogd
     group sdcard_rw radio inet
     oneshot
     disabled
-#service dlnasrv /system/bin/dlnasrv
-#    class main
-#    user mot_dlna
-#    group system net_admin sdcard_rw new_raw inet mount misc
-#    oneshot
-#    disabled
+service dlnasrv /system/bin/dlnasrv
+    class main
+    user mot_dlna
+    group system net_admin sdcard_rw new_raw inet mount misc
+    oneshot
+    disabled
 service dund_dialup /system/bin/dund --listen --channel=6 --nodetach --dialup
     class main
     group net_bt net_bt_admin
@@ -972,12 +978,12 @@ service vpnclientpm /system/bin/vpnclientpm
   #  group net_admin
   #  oneshot
   #  disabled
-#service logcatd-blan /system/bin/logcatd-blan
-#    user root
+service logcatd-blan /system/bin/logcatd-blan
+    user root
     # Immediately drops root, keeps CAP_SYS_ADMIN, and runs as below
     # user system
     # group system log inet
- #   disabled
+    disabled
 service gadget-qbp-modem /system/bin/tty2ttyd persist.ril.modem.ttydevice /dev/ttyGS2 0 1024
     user radio
     group radio
@@ -996,9 +1002,9 @@ on property:ro.bootmode=bp-tools
     start tcmd
     start gadget-qbp-modem
     start gadget-qbp-diag
-#    write /proc/sys/net/ipv4/ip_forward 1
- #   start wrigley-diag
- #   start logcatd-blan
+    write /proc/sys/net/ipv4/ip_forward 1
+    start wrigley-diag
+    start logcatd-blan
 service JuniperVPNTools /system/bin/JuniperVPNTools
     class main
     user vpn

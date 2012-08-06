@@ -29,8 +29,10 @@ ro.config.vc_call_vol_steps=7
 
 # wlan interface
 wifi.interface = wlan0
-softap.interface = wlan0
+#softap.interface = wlan1
 wifi.ap.interface = wlan0
+wifi.softap.interface=wlan0
+wifi.softapconcurrent.interface=wlan0
 
 # Time between scans in seconds. Keep it high to minimize battery drain.
 # This only affects the case in which there are remembered access points,
@@ -195,7 +197,7 @@ ro.mot.eri=0
 # VZW Requirement Specifications: NETWORK BASED PLUS CODE DIALING
 # 0 disable
 # 1 enable
-ro.cdma.nbpcd=1
+ro.cdma.nbpcd=0
 # END IKSHADOW-702
 
 
@@ -277,6 +279,7 @@ ro.com.google.clientidbase.ms=android-motorola
 ro.com.google.clientidbase.am=android-motorola
 ro.com.google.clientidbase.gmm=android-motorola
 ro.com.google.clientidbase.yt=android-motorola
+persist.ril.features=0x182
 persist.sys.usb.config=mass_storage,adb
 ro.config.notification_sound=OnTheHunt.ogg
 ro.config.alarm_alert=Alarm_Classic.ogg
@@ -326,3 +329,12 @@ com.ti.omap_enhancement=true
 hwui.render_dirty_regions=false
 ril.subscription.types=NV,RUIM
 ro.ril.moto.newarch=true
+
+ro.gsm.2nd_data_retry_config=max_retries=infinite,default_randomization=2000,0,0,80000,125000,485000,905000
+ro.gsm.data_retry_config=max_retries=infinite,default_randomization=2000,0,0,80000,125000,485000,905000
+
+#
+# fix signal bar
+# see https://github.com/flaviocdc/android_device_motorola_umts_spyder/commit/9686c866ae2faf5b8f7c3defe299b2a591ec81a0
+#
+ro.telephony.ril.v3=signalstrength

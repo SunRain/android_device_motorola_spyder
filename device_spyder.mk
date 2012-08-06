@@ -9,7 +9,7 @@ $(call inherit-product, device/common/gps/gps_us_supl.mk)
 
 # Device overlay
 #    DEVICE_PACKAGE_OVERLAYS += device/motorola/spyder/overlay/aosp
-DEVICE_PACKAGE_OVERLAYS += device/motorola/spyder/overlay/cm
+DEVICE_PACKAGE_OVERLAYS += device/motorola/spyder/overlay
 
 # high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal hdpi
@@ -22,17 +22,20 @@ PRODUCT_PACKAGES := \
 PRODUCT_PACKAGES += \
     camera.omap4 \
     libinvensense_mpl \
-    hwcomposer.omap4 \
-    hwcomposer.default \
     parse_hdmi_edid \
     libedid 
 
+        #hwcomposer.omap4 \
+    #hwcomposer.default \
 PRODUCT_PACKAGES += \
     libaudioutils \
-    libaudiohw_legacy \
-    audio.primary.spyder \
-    audio_policy.default \
-    audio_policy.spyder
+    libaudiohw_legacy 
+    
+     #libasound 
+    #libaudiopolicy_legacy
+    #audio.primary.spyder \
+    #audio_policy.default \
+    #audio_policy.spyder
 
 # BlueZ a2dp Audio HAL module
 PRODUCT_PACKAGES += \
@@ -53,8 +56,8 @@ PRODUCT_PACKAGES += \
     libaudiomodemgeneric \
     rild \
     radiooptions \
-    sh 
-    #nc 
+    sh \
+    nc 
     #libreference-cdma-sms \
 
 # Wifi
@@ -62,17 +65,18 @@ PRODUCT_PACKAGES += \
 #    wlan_cu \
 #    tiwlan.ini
 PRODUCT_PACKAGES += \
-    lib_driver_cmd_wl12xx \
     dhcpcd.conf \
     hostapd.conf \
     wifical.sh \
-    wpa_supplicant.conf \
     TQS_D_1.7.ini \
     TQS_D_1.7_127x.ini \
     crda \
     regulatory.bin \
     calibrator \
     busybox
+    
+    #lib_driver_cmd_wl12xx \
+    #wpa_supplicant.conf \
 
 # HotSpot
 #PRODUCT_PACKAGES += \
@@ -83,8 +87,8 @@ PRODUCT_PACKAGES += \
 
 # Bluetooth
 PRODUCT_PACKAGES += \
-    bt_sco_app \
-    uim-sysfs 
+    bt_sco_app 
+    #uim-sysfs 
 
 # Release utilities
 #PRODUCT_PACKAGES += \
@@ -94,12 +98,13 @@ PRODUCT_PACKAGES += \
 #    spyder_releaseutils-tune2fs
 
 PRODUCT_PACKAGES += \
-    Camera \
-    camera_test \
-    OMAPCamera \
     Superuser \
     su \
     DockAudio 
+    
+    #Camera \
+    #camera_test \
+    #OMAPCamera 
 
 
 PRODUCT_PACKAGES += \
@@ -118,7 +123,8 @@ PRODUCT_PACKAGES += \
     LiveWallpapers \
     LiveWallpapersPicker \
     VisualizationWallpapers \
-    PhaseBeam \
+    PhaseBeam 
+    #Gallery2
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise

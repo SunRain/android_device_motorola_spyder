@@ -12,10 +12,11 @@ mount -o remount,rw /
 
 cp -r -f /system/bootmenu/2nd-init/* /
 chmod 755 /*.rc
+chown 0:0 /*.rc
 
 cp /system/bootmenu/binary/2nd-init /sbin/2nd-init
 chmod 755 /sbin/2nd-init
-chown 0:2000 /sbin/2nd-init
+chown 0:0 /sbin/2nd-init
 rm -f /sbin/ueventd
 ln -s /init /sbin/ueventd
 
