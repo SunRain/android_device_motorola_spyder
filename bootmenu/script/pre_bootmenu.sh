@@ -73,9 +73,9 @@ cp -f /system/bootmenu/config/default.prop /default.prop
 mkdir -p /cache
 
 # stock mount, with fsck
-if [ -x /system/bin/mount_ext3.sh ]; then
-    /system/bin/mount_ext3.sh cache /cache
-fi
+#if [ -x /system/bin/mount_ext3.sh ]; then
+#    /system/bin/mount_ext3.sh cache /cache
+#fi
 
 # mount cache for boot mode and recovery logs
 if [ ! -d /cache/recovery ]; then

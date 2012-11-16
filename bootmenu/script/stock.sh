@@ -10,7 +10,7 @@ export PATH=/sbin:/system/xbin:/system/bin
 
 mount -o remount,rw /
 cp -f /system/bootmenu/binary/adbd /sbin/adbd
-chmod 4755 /sbin/adbd
+chmod 6755 /sbin/adbd
 chown root.system /sbin/adbd
 
 ######## Cleanup

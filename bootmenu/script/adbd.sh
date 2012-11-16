@@ -6,6 +6,7 @@
 source /system/bootmenu/script/_config.sh
 
 ######## Main Script
+exit 0
 
 mkdir -p /tmp
 chown system.shell /tmp
