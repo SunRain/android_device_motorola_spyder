@@ -3,7 +3,7 @@
 
 # Delete unwanted apps
 rm -f $REPACK/ota/system/app/RomManager.apk
-mv -f $REPACK/ota/system/vendor/lib/hw/hwcomposer.omap4.so $REPACK/ota/system/vendor/lib/hw/hwcomposer.omap4.so.bak
+#mv -f $REPACK/ota/system/vendor/lib/hw/hwcomposer.omap4.so $REPACK/ota/system/vendor/lib/hw/hwcomposer.omap4.so.bak
 #rm -f $REPACK/ota/system/app/FM.apk
 #rm -f $REPACK/ota/system/xbin/irssi
 
@@ -22,3 +22,7 @@ cp -f $ANDROID_BUILD_TOP/device/motorola/spyder/updater-script $REPACK/ota/META-
 #fi
 
 #cp -f $ANDROID_BUILD_TOP/out/target/product/spyder/root/init $REPACK/ota/system/bootmenu/2nd-init/init
+rm -f $REPACK/ota/system/app/Superuser.apk
+cp -f $ANDROID_BUILD_TOP/device/motorola/edison/prebuilt/app/SuperSU.apk $REPACK/ota/system/app
+rm -f $REPACK/ota/system/xbin/su
+cp -f $ANDROID_BUILD_TOP/device/motorola/edison/prebuilt/bin/su $REPACK/ota/system/xbin

@@ -40,4 +40,9 @@ $(call inherit-product, device/motorola/spyder/device_spyder.mk)
 PRODUCT_NAME := full_spyder
 PRODUCT_DEVICE := spyder
 PRODUCT_BRAND := MOTO
+ifeq ($(PRODUCT_TARGET_UMTS_SPYDER),true)
 PRODUCT_MODEL := XT910
+else
+PRODUCT_MODEL := XT912
+endif
+

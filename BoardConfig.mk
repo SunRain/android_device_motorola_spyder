@@ -9,7 +9,7 @@ BOARD_OVERRIDE_FB0_HEIGHT := 960
 
 # inherit from the proprietary version
 -include vendor/motorola/spyder/BoardConfigVendor.mk
-
+-include device/motorola/spyder/BuildToggle.mk
 
 # Processor
 TARGET_NO_BOOTLOADER := true
@@ -22,8 +22,8 @@ TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_ARCH_VARIANT_CPU := cortex-a9
 TARGET_ARCH_VARIANT_FPU := neon
 ARCH_ARM_HAVE_TLS_REGISTER := true
-NEEDS_ARM_ERRATA_754319_754320 := true
-TARGET_GLOBAL_CFLAGS += -DNEEDS_ARM_ERRATA_754319_754320
+#NEEDS_ARM_ERRATA_754319_754320 := true
+#TARGET_GLOBAL_CFLAGS += -DNEEDS_ARM_ERRATA_754319_754320
 
 #BOARD_PROVIDES_LIBRIL := true
 
@@ -31,26 +31,30 @@ TARGET_GLOBAL_CFLAGS += -DNEEDS_ARM_ERRATA_754319_754320
 # Kernel
 TARGET_PREBUILT_KERNEL := device/motorola/spyder/kernel
 BOARD_KERNEL_CMDLINE := omap_wdt.timer_margin=60 oops=panic console=/dev/null rw mem=1023M@0x80000000 vram=10300K omapfb.vram=0:8256K,1:4K,2:2040K init=/init ip=off mmcparts=mmcblk1:p7(pds),p8(utags),p14(boot),p15(recovery),p16(cdrom),p17(misc),p18(cid),p19(kpanic),p20(system),p21(cache),p22(preinstall),p23(webtop),p24(userdata),p25(emstorage) mot_sst=1
+#BOARD_KERNEL_CMDLINE := root=/dev/ram0 rw mem=1024M@0x80000000 console=ttyO2,115200n8 init=/init ip=off mmcparts=mmcblk1:p7(pds),p8(utags),p14(boot),p15(recovery),p16(cdrom),p17(misc),p18(cid),p19(kpanic),p20(system),p21(cache),p22(preinstall),p23(webtop),p24(userdata),p25(emstorage) mot_sst=1 androidboot.bootloader=0x0A72
 BOARD_KERNEL_BASE := 0x80000000
 BOARD_PAGE_SIZE := 0x4096
 
+
 # Kernel Build
-#TARGET_KERNEL_SOURCE := kernel/motorola/omap4_xt912
-#TARGET_KERNEL_CONFIG := mapphone_defconfig
+#TARGET_KERNEL_SOURCE := kernel/motorola/solana
+#TARGET_KERNEL_CONFIG := hashcode_1024_razr_defconfig
 #TARGET_PREBUILT_KERNEL := device/motorola/spyder/kernel
 
 #KERNEL_EXTERNAL_MODULES:
-#	make -C kernel/motorola/omap4_xt912/external/wlan/mac80211/compat_wl12xx KERNEL_DIR=$(KERNEL_OUT) KLIB=$(KERNEL_OUT) KLIB_BUILD=$(KERNEL_OUT) ARCH=arm CROSS_COMPILE="arm-eabi-"
-#	cp kernel/motorola/omap4_xt912/external/wlan/mac80211/compat_wl12xx/compat/compat.ko $(KERNEL_MODULES_OUT)
-#	cp kernel/motorola/omap4_xt912/external/wlan/mac80211/compat_wl12xx/net/mac80211/mac80211.ko $(KERNEL_MODULES_OUT)
-#	cp kernel/motorola/omap4_xt912/external/wlan/mac80211/compat_wl12xx/net/wireless/cfg80211.ko $(KERNEL_MODULES_OUT)
-#	cp kernel/motorola/omap4_xt912/external/wlan/mac80211/compat_wl12xx/drivers/net/wireless/wl12xx/wl12xx.ko $(KERNEL_MODULES_OUT)
-#	cp kernel/motorola/omap4_xt912/external/wlan/mac80211/compat_wl12xx/drivers/net/wireless/wl12xx/wl12xx_spi.ko $(KERNEL_MODULES_OUT)
-#	cp kernel/motorola/omap4_xt912/external/wlan/mac80211/compat_wl12xx/drivers/net/wireless/wl12xx/wl12xx_sdio.ko $(KERNEL_MODULES_OUT)
-	# make -C kernel/motorola/omap4_xt912/external/vpndriver KERNEL_DIR=$(KERNEL_OUT) KLIB=$(KERNEL_OUT) KLIB_BUILD=$(KERNEL_OUT) ARCH=arm CROSS_COMPILE="arm-eabi-"
-	# mv kernel/motorola/omap4_xt912/external/vpndriver/vpnclient.ko $(KERNEL_MODULES_OUT)
-
-#$(KERNEL_OUT)
+#	make clean -C hardware/ti/wlan/mac80211/compat_wl12xx
+#	make -C hardware/ti/wlan/mac80211/compat_wl12xx KERNEL_DIR=$(KERNEL_OUT) KLIB=$(KERNEL_OUT) KLIB_BUILD=$(KERNEL_OUT) ARCH=arm CROSS_COMPILE="arm-eabi-"
+#	cp hardware/ti/wlan/mac80211/compat_wl12xx/compat/compat.ko $(KERNEL_MODULES_OUT)
+#	cp hardware/ti/wlan/mac80211/compat_wl12xx/net/mac80211/mac80211.ko $(KERNEL_MODULES_OUT)
+#	cp hardware/ti/wlan/mac80211/compat_wl12xx/net/wireless/cfg80211.ko $(KERNEL_MODULES_OUT)
+#	cp hardware/ti/wlan/mac80211/compat_wl12xx/drivers/net/wireless/wl12xx/wl12xx.ko $(KERNEL_MODULES_OUT)
+#	cp hardware/ti/wlan/mac80211/compat_wl12xx/drivers/net/wireless/wl12xx/wl12xx_spi.ko $(KERNEL_MODULES_OUT)
+#	cp hardware/ti/wlan/mac80211/compat_wl12xx/drivers/net/wireless/wl12xx/wl12xx_sdio.ko $(KERNEL_MODULES_OUT)
+#	cp hardware/ti/wlan/mac80211/compat_wl12xx/drivers/net/wireless/wl12xx/wl12xx_sdio.ko $(KERNEL_MODULES_OUT)
+#	tar -xvf $(ANDROID_BUILD_TOP)/device/ti/proprietary-open/omap4/sgx_src/eurasia_km.tgz -C $(KERNEL_OUT)
+#	make clean -C $(KERNEL_OUT)/eurasia_km/eurasiacon/build/linux2/omap4430_android
+#	make -C $(KERNEL_OUT)/eurasia_km/eurasiacon/build/linux2/omap4430_android ARCH=arm KERNEL_CROSS_COMPILE=arm-eabi- CROSS_COMPILE=arm-eabi- KERNELSRC=$(KERNEL_OUT)/../../../../../../kernel/motorola/solana KERNELDIR=$(KERNEL_OUT) TARGET_PRODUCT="blaze_tablet" BUILD=release TARGET_SGX=540 PLATFORM_VERSION=4.0
+#	cp $(KERNEL_OUT)/../../target/kbuild/pvrsrvkm_sgx540_120.ko $(KERNEL_MODULES_OUT)
 
 #TARGET_KERNEL_MODULES := KERNEL_EXTERNAL_MODULES
 
@@ -63,18 +67,23 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/android0/f_mass_stora
 BOARD_MTP_DEVICE := "/dev/mtp_usb"
 
 # Connectivity - Wi-Fi
+USES_TI_MAC80211 := true
+ifdef USES_TI_MAC80211
 BOARD_WPA_SUPPLICANT_DRIVER      := NL80211
-WPA_SUPPLICANT_VERSION           := VER_0_8_X
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wl12xx
+WPA_SUPPLICANT_VERSION           := VER_0_8_X_TI
+#BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wl12xx
 BOARD_HOSTAPD_DRIVER             := NL80211
 PRODUCT_WIRELESS_TOOLS           := true
-BOARD_HOSTAPD_PRIVATE_LIB        := lib_driver_cmd_wl12xx
+#BOARD_HOSTAPD_PRIVATE_LIB        := lib_driver_cmd_wl12xx
 BOARD_WLAN_DEVICE                := wl12xx_mac80211
 BOARD_SOFTAP_DEVICE              := wl12xx_mac80211
 WIFI_DRIVER_MODULE_PATH          := "/system/lib/modules/wl12xx_sdio.ko"
 WIFI_DRIVER_MODULE_NAME          := "wl12xx_sdio"
 WIFI_FIRMWARE_LOADER             := ""
 COMMON_GLOBAL_CFLAGS += -DUSES_TI_MAC80211
+endif
+
+#COMMON_GLOBAL_CFLAGS += -DOMAP_ICS_CAMERA
 
 # Audio
 BOARD_USES_GENERIC_AUDIO := false
@@ -135,7 +144,7 @@ BOARD_SYSTEM_FILESYSTEM := ext3
 BOARD_EGL_CFG := device/motorola/spyder/prebuilt/etc/egl.cfg
 USE_OPENGL_RENDERER := true
 #COMMON_GLOBAL_CFLAGS += -DMISSING_EGL_EXTERNAL_IMAGE -DMISSING_EGL_PIXEL_FORMAT_YV12 -DMISSING_GRALLOC_BUFFERS
-COMMON_GLOBAL_CFLAGS += -DSURFACEFLINGER_FORCE_SCREEN_RELEASE
+#COMMON_GLOBAL_CFLAGS += -DSURFACEFLINGER_FORCE_SCREEN_RELEASE
 
 # OMAP
 OMAP_ENHANCEMENT := true
@@ -143,11 +152,20 @@ ifdef OMAP_ENHANCEMENT
 COMMON_GLOBAL_CFLAGS += -DOMAP_ENHANCEMENT -DTARGET_OMAP4
 endif
 
-ENHANCED_DOMX := true
+#ENHANCED_DOMX := true
+ifdef ENHANCED_DOMX
+    COMMON_GLOBAL_CFLAGS += -DENHANCED_DOMX
+    DOMX_PATH := hardware/ti/domx
+else
+    DOMX_PATH := hardware/ti/omap4xxx/domx
+endif
 USE_ITTIAM_AAC := true
 ifdef USE_ITTIAM_AAC
 COMMON_GLOBAL_CFLAGS += -DUSE_ITTIAM_AAC
 endif
+
+#COMMON_GLOBAL_CFLAGS += -DTI_UTILS_MESSAGE_QUEUE_DEBUG_ENABLED -DTI_UTILS_MESSAGE_QUEUE_DEBUG_FUNCTION_NAMES
+
 
 # MOTOROLA
 USE_MOTOROLA_CODE := true
@@ -196,3 +214,10 @@ BOARD_USES_SECURE_SERVICES := true
 BOARD_HAS_MAPPHONE_SWITCH := true
 USE_IPV6_ROUTE := true
 BOARD_HAS_LOCKED_BOOTLOADER := true
+#LEGACY_RIL := true
+
+BOARD_HAS_VIRTUAL_KEYS := true
+BOARD_VIRTUAL_KEY_HEIGHT := 64
+BOARD_MAX_TOUCH_X := 1024
+BOARD_MAX_TOUCH_Y := 1024
+

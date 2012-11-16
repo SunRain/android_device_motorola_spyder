@@ -1,6 +1,13 @@
 # Required tools and blobs for bootmenu
 
 #$(call inherit-product, device/motorola/common/Android.mk)
+-include device/motorola/spyder/BuildToggle.mk
+
+ifeq ($(PRODUCT_TARGET_UMTS_SPYDER),true)
+target_device := umts
+else
+target_device := cdma
+endif
 
 bm_device = device/motorola/spyder
 
@@ -22,16 +29,15 @@ PRODUCT_COPY_FILES += \
 # init.rc profiles
 PRODUCT_COPY_FILES += \
 	${bm_device}/bootmenu/profiles/cm/init.rc:system/bootmenu/2nd-init/init.rc \
-	${bm_device}/bootmenu/profiles/cm/init.mapphone_cdma.rc:system/bootmenu/2nd-init/init.mapphone_cdma.rc \
-	${bm_device}/bootmenu/profiles/cm/init.mapphone_umts.rc:system/bootmenu/2nd-init/init.mapphone_umts.rc \
 	${bm_device}/bootmenu/profiles/cm/init.trace.rc:system/bootmenu/2nd-init/init.trace.rc \
 	${bm_device}/bootmenu/profiles/cm/init.usb.rc:system/bootmenu/2nd-init/init.usb.rc \
 	${bm_device}/bootmenu/profiles/cm/ueventd.rc:system/bootmenu/2nd-init/ueventd.rc	\
-	${bm_device}/bootmenu/profiles/cm/ueventd.mapphone_cdma.rc:system/bootmenu/2nd-init/ueventd.mapphone_cdma.rc \
-	${bm_device}/bootmenu/profiles/cm/ueventd.mapphone_umts.rc:system/bootmenu/2nd-init/ueventd.mapphone_umts.rc \
 	${bm_device}/bootmenu/profiles/cm/init:system/bootmenu/2nd-init/init \
 	${bm_device}/bootmenu/profiles/cm/default.prop:system/bootmenu/2nd-init/default.prop \
-	${bm_device}/bootmenu/profiles/cm/usbcheck.sh:system/bootmenu/2nd-init/usbcheck.sh 
+        ${bm_device}/bootmenu/profiles/cm-${target_device}/ueventd.mapphone_cdma.rc:system/bootmenu/2nd-init/ueventd.mapphone_cdma.rc \
+	${bm_device}/bootmenu/profiles/cm-${target_device}/ueventd.mapphone_umts.rc:system/bootmenu/2nd-init/ueventd.mapphone_umts.rc \
+	${bm_device}/bootmenu/profiles/cm-${target_device}/init.mapphone_cdma.rc:system/bootmenu/2nd-init/init.mapphone_cdma.rc \
+	${bm_device}/bootmenu/profiles/cm-${target_device}/init.mapphone_umts.rc:system/bootmenu/2nd-init/init.mapphone_umts.rc \
 
 # scripts
 PRODUCT_COPY_FILES += \
@@ -58,7 +64,7 @@ PRODUCT_COPY_FILES += \
 	${bm_device}/bootmenu/binary/2nd-init:system/bootmenu/binary/2nd-init \
 	${bm_device}/bootmenu/binary/adbd.root:system/bootmenu/binary/adbd.root \
 	${bm_device}/bootmenu/binary/adbd:system/bootmenu/binary/adbd \
-	out/target/product/spyder/utilities/busybox:system/bootmenu/binary/busybox \
+	${bm_device}/bootmenu/binary/busybox:system/bootmenu/binary/busybox \
 	${bm_device}/bootmenu/binary/lsof.static:system/bootmenu/binary/lsof \
 	${bm_device}/bootmenu/binary/bootmenu:system/bootmenu/binary/bootmenu \
 	${bm_device}/bootmenu/binary/recovery:system/bootmenu/binary/recovery

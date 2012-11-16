@@ -1,0 +1,54 @@
+PRODUCT_PROPERTY_OVERRIDES += \
+cdma_ril.libpath=/system/lib/libmoto_ril.so \
+dalvik.vm.dexopt-flags=m=y \
+persist.radio.ap.phonetype=1 \
+persist.ril.event.report=0 \
+persist.ril.features = 0x102 \
+persist.ril.features=0x182 \
+persist.ril.modem.mode =2 \
+persist.ril.mux.noofchannels = 10 \
+persist.ril.mux.retries = 500 \
+persist.ril.mux.sleep = 2 \
+persist.ril.mux.ttydevice = /dev/ttyO0 \
+persist.ril.qmi.overspi = yes \
+persist.sys.gsm_signalstrength=true \
+radio.mtu.size=1500 \
+ro.HorizontalBUA=false \
+ro.camera.sound.forced=1 \
+ro.cdma.data_retry_config = default_randomization=2000,0,0,120000,180000,540000,960000 \
+ro.cdma.home.operator.numeric=310004 \
+ro.cdma.nbpcd=0 \
+ro.com.google.clientidbase.am=android-motorola \
+ro.com.google.clientidbase.am=android-motorola \
+ro.com.google.clientidbase.gmm=android-motorola \
+ro.com.google.clientidbase.ms=android-motorola \
+ro.com.google.clientidbase.yt=android-motorola \
+ro.com.google.clientidbase=android-motorola \
+ro.com.google.clientidbase=android-motorola \
+ro.com.google.locationfeatures=1 \
+ro.config.alarm_alert=Alarm_Classic.ogg \
+ro.config.not_world_phone=true \
+ro.config.notification_sound=OnTheHunt.ogg \
+ro.gsm.2nd_data_retry_config=max_retries=infinite,default_randomization=2000,0,0,80000,125000,485000,905000 \
+ro.gsm.data_retry_config=max_retries=infinite,default_randomization=2000,0,0,80000,125000,485000,905000 \
+ro.hdcp.support = 2 \
+ro.kernel.android.ril = yes \
+ro.media.enc.aud.codec=amrnb \
+ro.media.enc.aud.fileformat=amr \
+ro.mot.bindervm.config=120 \
+ro.mot.ds.fastdormancy.disable=false \
+ro.mot.eri=0 \
+ro.mot.hw.calibratedImager=1 \
+ro.mot.hw.navkeyboard.devname=cy8c201xx \
+ro.mot.internalsdcard=1 \
+ro.mot.mynet=true \
+ro.mot.phonemode.vzw4gphone=0 \
+ro.mot.phonemode.vzwglobalphone=0 \
+ro.mot.setuptype=2 \
+ro.setupwizard.enable_bypass = 1 \
+ro.telephony.call_ring.delay = 3000 \
+ro.telephony.call_ring.multiple = false \
+ro.telephony.call_ring.multiple=false \
+ro.telephony.default_network=3 \
+ro.telephony.gsm-routes-us-smsc = 0 \
+sys.mot.ui.launched=false \

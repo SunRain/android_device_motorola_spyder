@@ -196,7 +196,7 @@
          bluetooth interfaces.  If the device doesn't want to support tethering over bluetooth this
          should be empty. -->
     <string-array translatable="false" name="config_tether_bluetooth_regexs">
-        <item>"bnep\\d"</item>
+        <item>"bnep"</item>
     </string-array>
 
     <!-- Regex of wired ethernet ifaces
@@ -251,7 +251,7 @@
     <bool name="config_disableMenuKeyInLockScreen">true</bool>
 
     <!-- The default iface on which to monitor data use -->
-    <string name="config_datause_iface">rmnet0</string>
+    <!-- string name="config_datause_iface">rmnet0</string -->
 
     <!-- IP address of the dns server to use if nobody else suggests one -->
     <string name="config_default_dns_server">8.8.8.8</string>

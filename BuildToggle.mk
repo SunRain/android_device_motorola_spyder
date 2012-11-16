@@ -1,0 +1,2 @@
+
+PRODUCT_TARGET_UMTS_SPYDER := false

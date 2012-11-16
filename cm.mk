@@ -9,17 +9,28 @@ $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 
 DEVICE_PACKAGE_OVERLAYS += device/motorola/spyder/overlay/cm
 
+-include device/motorola/spyder/BuildToggle.mk
+
 #
 # Setup device specific product configuration.
 #
 PRODUCT_NAME := cm_spyder
 PRODUCT_BRAND := MOTO
 PRODUCT_DEVICE := spyder
+ifeq ($(PRODUCT_TARGET_UMTS_SPYDER),true)
 PRODUCT_DEVICE_PREFIX := umts
 PRODUCT_MODEL := XT910
+# Release name and versioning
+PRODUCT_RELEASE_NAME := XT910
+else
+PRODUCT_DEVICE_PREFIX := cdma
+PRODUCT_MODEL := XT912
+# Release name and versioning
+PRODUCT_RELEASE_NAME := XT912
+endif
 PRODUCT_MANUFACTURER := Motorola
 PRODUCT_SFX := Razr
-ANDROID_VERSION := 4.1.1_r1
+ANDROID_VERSION := 4.1.2_r1
 #MOTOROLA_BUILD_ID := 6.7.1-68_DHD-15_M4-16
 MOTOROLA_BUILD_ID := JRO03C
 MOTOROLA_SOFTWARE_VERSION := 6.14.84
@@ -28,8 +39,7 @@ DEVELOPER_HOST := www.591fan.com
 DEVELOPMENT_STAGE := Beta
 TARGET_BOOTANIMATION_NAME := vertical-540x960
 
-# Release name and versioning
-PRODUCT_RELEASE_NAME := XT910_RTGB
+
 
 UTC_DATE := $(shell date +%s)
 DATE := $(shell date +%Y%m%d)

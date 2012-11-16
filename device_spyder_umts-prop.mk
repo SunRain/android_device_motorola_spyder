@@ -1,0 +1,54 @@
+PRODUCT_PROPERTY_OVERRIDES += \
+	persist.ril.modem.mode =2 \
+	ro.telephony.default_network=3 \
+	ro.com.google.clientidbase=android-motorola \
+	ro.com.google.clientidbase.am=android-motorola \
+	ro.cdma.home.operator.numeric=310004 \
+	ro.mot.hw.calibratedImager=1 \
+	ro.kernel.android.ril = yes \
+	persist.ril.mux.noofchannels = 10 \
+	persist.ril.mux.ttydevice = /dev/ttyO0 \
+	persist.ril.features = 0x102 \
+	persist.ril.mux.retries = 500 \
+	persist.ril.mux.sleep = 2 \
+	persist.ril.qmi.overspi = yes \
+	ro.telephony.call_ring.multiple = false \
+	ro.telephony.call_ring.delay = 3000 \
+	ro.setupwizard.enable_bypass = 1 \
+	ro.cdma.data_retry_config = default_randomization=2000,0,0,120000,180000,540000,960000 \
+	ro.mot.phonemode.vzwglobalphone=0 \
+	ro.telephony.gsm-routes-us-smsc = 0 \
+	persist.radio.ap.phonetype=1 \
+	sys.mot.ui.launched=false \
+	ro.mot.bindervm.config=120 \
+	ro.mot.mynet=true \
+	ro.HorizontalBUA=false \
+	ro.mot.eri=0 \
+	ro.cdma.nbpcd=0 \
+	ro.hdcp.support = 2 \
+	ro.mot.ds.fastdormancy.disable=false \
+	persist.ril.event.report=0 \
+	ro.mot.hw.navkeyboard.devname=cy8c201xx \
+	ro.telephony.call_ring.multiple=false \
+	ro.camera.sound.forced=1 \
+	radio.mtu.size=1500 \
+	ro.com.google.clientidbase=android-motorola \
+	ro.com.google.clientidbase.ms=android-motorola \
+	ro.com.google.clientidbase.am=android-motorola \
+	ro.com.google.clientidbase.gmm=android-motorola \
+	ro.com.google.clientidbase.yt=android-motorola \
+	persist.ril.features=0x182 \
+	ro.config.notification_sound=OnTheHunt.ogg \
+	ro.config.alarm_alert=Alarm_Classic.ogg \
+	ro.media.enc.aud.fileformat=amr \
+	ro.media.enc.aud.codec=amrnb \
+	ro.mot.phonemode.vzw4gphone=0 \
+	cdma_ril.libpath=/system/lib/libmoto_ril.so \
+	ro.mot.setuptype=2 \
+	ro.mot.internalsdcard=1 \
+	dalvik.vm.dexopt-flags=m=y \
+	ro.com.google.locationfeatures=1 \
+	ro.gsm.2nd_data_retry_config=max_retries=infinite,default_randomization=2000,0,0,80000,125000,485000,905000 \
+	ro.gsm.data_retry_config=max_retries=infinite,default_randomization=2000,0,0,80000,125000,485000,905000 \
+	persist.sys.gsm_signalstrength=true \
+	ro.config.not_world_phone=true
