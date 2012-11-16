@@ -47,3 +47,12 @@
 # ************************************************
 # NEWER CLEAN STEPS MUST BE AT THE END OF THE LIST
 # ************************************************
+
+$(call add-clean-step, rm -rf $(PRODUCT_OUT)/cm_spyder-ota*)
+$(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/*)
+$(call add-clean-step, rm -rf $(PRODUCT_OUT)/root/*)
+$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/PACKAGING/*)
+$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/ETC/*)
+$(call add-clean-step, rm -rf $(PRODUCT_OUT)/obj/FIRMWARE/*)
+
+
