@@ -35,4 +35,4 @@ PRODUCT_PACKAGES := \
 	libOMX.TI.DUCATI1.VIDEO.CAMERA \
 	libOMX.TI.DUCATI1.MISC.SAMPLE \
 	camera.omap4 \
-	hwcomposer.omap4 \
+	hwcomposer.spyder
