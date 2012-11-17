@@ -548,7 +548,27 @@ on property:sys.chargeonly.mode=1
     start battd
     start whisperd
     start charge_only_mode
+
+on property:persist.service.adb.enable=1
+    start adbd
+
 # Power up to suspend
+on property:tcmd.suspend=1
+    stop surfaceflinger
+    stop media
+    stop zygote
+    #write /sys/devices/virtual/radio/w3g_lte/command suspend
+# Normal to suspend
+on property:tcmd.suspend=2
+    stop surfaceflinger
+    stop media
+    stop zygote
+    #write /sys/devices/virtual/radio/w3g_lte/command suspend
+# suspend to start services
+on property:tcmd.suspend=3
+    start surfaceflinger
+    start media
+    start zygote
 service tund /system/bin/tund
     class core
     socket tund stream 0660 vpn system
@@ -777,6 +797,19 @@ service secclkd /system/bin/secclkd
     socket secclk_socket stream 660 mot_secclkd mot_secclkd
     user mot_tpapi
     group mot_tpapi mot_sec_rtc mot_secclkd
+on property:tcmd.ctrl_adb=1
+    write /sys/class/android_usb/android0/pc_command_adb "adb"
+    setprop sys.usb.config $sys.usb.config
+    start adbd
+on property:tcmd.ctrl_adb=0
+    write /sys/class/android_usb/android0/pc_command_adb " "
+    setprop sys.usb.config $sys.usb.config
+    stop adbd
+on property:persist.factory.allow_adb=1
+    write /sys/class/android_usb/android0/pc_command_adb "adb"
+on property:persist.factory.allow_adb=0
+    write /sys/class/android_usb/android0/pc_command_adb " "
+
 service thermal_manager /system/bin/thermaldaemon
     class main
     user system
@@ -796,9 +829,9 @@ on property:sys.usb.config=mass_storage
     write /sys/class/android_usb/android0/idProduct 4365
     write /sys/module/g_android/parameters/cdrom 0
     write /sys/module/g_android/parameters/cdrom_switch 0
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
+    write /sys/class/android_usb/android0/functions "mass_storage"
     write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state ${sys.usb.config}
+    setprop sys.usb.state $sys.usb.config
 # USB Mass Storage configuration, with adb
 on property:sys.usb.config=mass_storage,adb
     write /sys/class/android_usb/android0/enable 0
@@ -806,27 +839,27 @@ on property:sys.usb.config=mass_storage,adb
     write /sys/class/android_usb/android0/idProduct 4366
     write /sys/module/g_android/parameters/cdrom 0
     write /sys/module/g_android/parameters/cdrom_switch 0
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
+    write /sys/class/android_usb/android0/functions "mass_storage,adb"
     write /sys/class/android_usb/android0/enable 1
     start adbd
-    setprop sys.usb.state ${sys.usb.config}
+    setprop sys.usb.state $sys.usb.config
 # USB ptp configuration
 on property:sys.usb.config=ptp
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 22b8
     write /sys/class/android_usb/android0/idProduct 4367
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
+    write /sys/class/android_usb/android0/functions "ptp"
     write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state ${sys.usb.config}
+    setprop sys.usb.state $sys.usb.config
 # USB ptp configuration, with adb
 on property:sys.usb.config=ptp,adb
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 22b8
     write /sys/class/android_usb/android0/idProduct 4368
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
+    write /sys/class/android_usb/android0/functions "ptp,adb"
     write /sys/class/android_usb/android0/enable 1
     start adbd
-    setprop sys.usb.state ${sys.usb.config}
+    setprop sys.usb.state $sys.usb.config
 # USB mtp configuration
 on property:sys.usb.config=mtp
     write /sys/class/android_usb/android0/enable 0
@@ -834,34 +867,34 @@ on property:sys.usb.config=mtp
     write /sys/class/android_usb/android0/idProduct 437f
     write /sys/module/g_android/parameters/cdrom 1
     write /sys/module/g_android/parameters/cdrom_switch 1
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
+    write /sys/class/android_usb/android0/functions "cdrom"
     write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state ${sys.usb.config}
+    setprop sys.usb.state $sys.usb.config
 # USB mtp configuration, with adb
 on property:sys.usb.config=mtp,adb
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 22b8
     write /sys/class/android_usb/android0/idProduct 4362
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
+    write /sys/class/android_usb/android0/functions "mtp,usbnet,adb"
     write /sys/class/android_usb/android0/enable 1
     start adbd
-    setprop sys.usb.state ${sys.usb.config}
+    setprop sys.usb.state $sys.usb.config
 # USB rndis configuration
 on property:sys.usb.config=rndis
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 22b8
     write /sys/class/android_usb/android0/idProduct 431c
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
+    write /sys/class/android_usb/android0/functions "rndis"
     write /sys/class/android_usb/android0/f_rndis/wceis 1
     write /sys/class/android_usb/android0/enable 1
-    setprop sys.usb.state ${sys.usb.config}
+    setprop sys.usb.state $sys.usb.config
 # USB rndis configuration, with adb
 on property:sys.usb.config=rndis,adb
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 22b8
     write /sys/class/android_usb/android0/idProduct 431d
-    write /sys/class/android_usb/android0/functions ${sys.usb.config}
+    write /sys/class/android_usb/android0/functions "rndis,adb"
     write /sys/class/android_usb/android0/f_rndis/wceis 1
     write /sys/class/android_usb/android0/enable 1
     start adbd
-    setprop sys.usb.state ${sys.usb.config}
+    setprop sys.usb.state $sys.usb.config
